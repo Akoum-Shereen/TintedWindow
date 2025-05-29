@@ -12,9 +12,9 @@ using TintedWindow.Models.WebManagement;
 namespace TintedWindow.Controllers.UserManagement
 {
     [Authorize]
-    public class CounterController : SharedController
+    public class ApplicationController : SharedController
     {
-        private readonly ILogger<CounterController> _logger;
+        private readonly ILogger<ApplicationController> _logger;
         private IConfiguration _configuration;
         [System.Obsolete]
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
@@ -30,8 +30,8 @@ namespace TintedWindow.Controllers.UserManagement
         private readonly string staticUrl;
         private readonly bool isStaticLogin;
 
-        public CounterController(
-           ILogger<CounterController> logger, IConfiguration iconfig, IStringLocalizer<SharedResource> localizer,
+        public ApplicationController(
+           ILogger<ApplicationController> logger, IConfiguration iconfig, IStringLocalizer<SharedResource> localizer,
            Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment,
            IHttpContextAccessor httpContextAccessor) : base(iconfig, hostingEnvironment, logger, localizer, httpContextAccessor)
         {
@@ -41,7 +41,7 @@ namespace TintedWindow.Controllers.UserManagement
             _hostingEnvironment = hostingEnvironment;
             _localizer = localizer;
 
-            sectionName = "Counter";
+            sectionName = "Application";
 
             viewRoleId = (int)Common.Action.View;
             addRoleId = (int)Common.Action.Add;
@@ -54,7 +54,7 @@ namespace TintedWindow.Controllers.UserManagement
 
         public async Task<ActionResult> Index()
         {
-            ViewData["Title"] = _localizer["Counter"];
+            ViewData["Title"] = _localizer["application"];
 
             return View();
         }
@@ -63,7 +63,7 @@ namespace TintedWindow.Controllers.UserManagement
         [ValidateAntiForgeryToken]
         public async Task<dynamic> List(QueryResult obj)
         {
-            _logger.LogInformation("->>>>>>>>>Counter List  url>>>>>>>>>>>");
+            _logger.LogInformation("->>>>>>>>>Application List  url>>>>>>>>>>>");
 
             string url = "";
 
@@ -78,13 +78,27 @@ namespace TintedWindow.Controllers.UserManagement
 
             dynamic? res = null;
 
-            res = await PostCall(url, new { }, null);
+            res = await PostCall(url, obj, null);
 
             _logger.LogInformation(">>>>>>>>>result >>>>>>");
 
             return res != null ? res.ToString() : res;
         }
 
+
+        public async Task<ActionResult> Create()
+        {
+            ViewData["UserAction"] = "add";
+
+            if (!HasRole(sectionName, addRoleId))
+            {
+                _logger.LogInformation("->>>>>>>>>Application " + Enum.GetName(typeof(Common.Action), addRoleId) + " Role(s) Not Found>>>>>>>>>>>");
+
+                return PageRedirect("LoginPage");
+            }
+
+            return View("Create");
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<dynamic> Create(CounterReq obj)

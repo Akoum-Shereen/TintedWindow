@@ -120,38 +120,23 @@
   <data name="Action" xml:space="preserve">
     <value>Action</value>
   </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
-  <data name="AddCategory" xml:space="preserve">
-    <value>Add Category</value>
-  </data>
-  <data name="AddCorporate" xml:space="preserve">
-    <value>Add Corporate</value>
-  </data>
-  <data name="AddCorporateService" xml:space="preserve">
-    <value>Add Corporate Service</value>
-  </data>
-  <data name="AddCounter" xml:space="preserve">
-    <value>Add Counter</value>
-  </data>
-  <data name="AddLocation" xml:space="preserve">
-    <value>Add Location</value>
+  <data name="Added Date" xml:space="preserve">
+    <value>Added Date</value>
   </data>
   <data name="AddNew" xml:space="preserve">
     <value>Add New</value>
   </data>
-  <data name="AddServiceLink" xml:space="preserve">
-    <value>Add Service Link</value>
+  <data name="application" xml:space="preserve">
+    <value>Appliaction</value>
   </data>
-  <data name="Announcement" xml:space="preserve">
-    <value>Announcement</value>
-  </data>
-  <data name="AnnouncementList" xml:space="preserve">
-    <value>Announcement List</value>
-  </data>
-  <data name="Appointmentwaitdays" xml:space="preserve">
-    <value>Appointment wait days</value>
+  <data name="applicationList" xml:space="preserve">
+    <value>Application List</value>
   </data>
   <data name="AreUSure" xml:space="preserve">
     <value>Are you Sure?</value>
@@ -159,44 +144,26 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="Category" xml:space="preserve">
-    <value>Category</value>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
   </data>
-  <data name="CategoryList" xml:space="preserve">
-    <value>Category List</value>
+  <data name="Configuration" xml:space="preserve">
+    <value>Configuration</value>
   </data>
-  <data name="Content" xml:space="preserve">
-    <value>Content</value>
+  <data name="Confirm Password" xml:space="preserve">
+    <value>Confirm Password</value>
   </data>
-  <data name="Corporate" xml:space="preserve">
-    <value>Corporate</value>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>Confirm New Password</value>
   </data>
-  <data name="CorporateList" xml:space="preserve">
-    <value>Corporate List</value>
-  </data>
-  <data name="Corporatename" xml:space="preserve">
-    <value>Corporate Name</value>
-  </data>
-  <data name="CorporateService" xml:space="preserve">
-    <value>Corporate Service</value>
-  </data>
-  <data name="CorporateServiceList" xml:space="preserve">
-    <value>Corporate Service List</value>
-  </data>
-  <data name="Counter" xml:space="preserve">
-    <value>Counter</value>
-  </data>
-  <data name="CounterList" xml:space="preserve">
-    <value>Counter List</value>
-  </data>
-  <data name="Counternumber" xml:space="preserve">
-    <value>counternumber</value>
-  </data>
-  <data name="Counters" xml:space="preserve">
-    <value>Counters</value>
+  <data name="CPFT" xml:space="preserve">
+    <value>Change Password</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>Day</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
@@ -207,11 +174,23 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
   <data name="Discard" xml:space="preserve">
     <value>Discard</value>
   </data>
+  <data name="Displaying" xml:space="preserve">
+    <value>Displaying</value>
+  </data>
   <data name="Displaymessage" xml:space="preserve">
     <value>Display Message</value>
+  </data>
+  <data name="Displayname" xml:space="preserve">
+    <value>Display Name</value>
+  </data>
+  <data name="Displayorder" xml:space="preserve">
+    <value>Display Order</value>
   </data>
   <data name="DropZoneTitle1" xml:space="preserve">
     <value>Drop files here or click to upload.</value>
@@ -219,26 +198,14 @@
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
-  <data name="EditCategory" xml:space="preserve">
-    <value>Edit Category</value>
+  <data name="EditProfile" xml:space="preserve">
+    <value>Edit Profile</value>
   </data>
-  <data name="EditCorporate" xml:space="preserve">
-    <value>Edit Corporate</value>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
-  <data name="EditCorporateService" xml:space="preserve">
-    <value>Edit Corporate Service</value>
-  </data>
-  <data name="EditCounter" xml:space="preserve">
-    <value>Edit Counter</value>
-  </data>
-  <data name="EditLocation" xml:space="preserve">
-    <value>Edit Location</value>
-  </data>
-  <data name="EditServiceLink" xml:space="preserve">
-    <value>Edit Service Link</value>
-  </data>
-  <data name="EnterContent" xml:space="preserve">
-    <value>Enter Content</value>
+  <data name="Enddate" xml:space="preserve">
+    <value>End Date</value>
   </data>
   <data name="EnterDate" xml:space="preserve">
     <value>Enter Date</value>
@@ -261,6 +228,9 @@
   <data name="EnterUsername" xml:space="preserve">
     <value>Enter Username</value>
   </data>
+  <data name="Full Name" xml:space="preserve">
+    <value>Full Name</value>
+  </data>
   <data name="isRequired" xml:space="preserve">
     <value>is Required</value>
   </data>
@@ -273,11 +243,11 @@
   <data name="Location" xml:space="preserve">
     <value>Location</value>
   </data>
-  <data name="LocationList" xml:space="preserve">
-    <value>Location List</value>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
   </data>
-  <data name="Maxappointments" xml:space="preserve">
-    <value>Max Appointments</value>
+  <data name="Month" xml:space="preserve">
+    <value>Month</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -285,20 +255,23 @@
   <data name="Neededdocs" xml:space="preserve">
     <value>Needed Docs</value>
   </data>
-  <data name="Nextidservice" xml:space="preserve">
-    <value>Next Id Service</value>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New Password</value>
   </data>
-  <data name="Nextservicename" xml:space="preserve">
-    <value>Next Service Name</value>
-  </data>
-  <data name="Nextservice" xml:space="preserve">
-    <value>Next Service</value>
+  <data name="NoDataFound" xml:space="preserve">
+    <value>No Data Found</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Old Password</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Phone</value>
   </data>
   <data name="Phonenumber" xml:space="preserve">
     <value>Phone Number</value>
@@ -306,32 +279,41 @@
   <data name="PleaseWait..." xml:space="preserve">
     <value>Please wait...</value>
   </data>
+  <data name="RecordsPerPage" xml:space="preserve">
+    <value>records per page</value>
+  </data>
+  <data name="Rescheduledate" xml:space="preserve">
+    <value>Reschedule date</value>
+  </data>
   <data name="RevertThis" xml:space="preserve">
     <value>You won't be able to revert this!</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
   </data>
   <data name="Search..." xml:space="preserve">
     <value>Search...</value>
   </data>
-  <data name="Service" xml:space="preserve">
-    <value>Service</value>
-  </data>
-  <data name="ServiceLink" xml:space="preserve">
-    <value>Service Link</value>
-  </data>
-  <data name="ServiceLinkList" xml:space="preserve">
-    <value>Service Link List</value>
-  </data>
-  <data name="ServiceList" xml:space="preserve">
-    <value>Service List</value>
-  </data>
-  <data name="Servicename" xml:space="preserve">
-    <value>Service Name</value>
+  <data name="Sections" xml:space="preserve">
+    <value>Sections</value>
   </data>
   <data name="SignIn" xml:space="preserve">
     <value>Sign In</value>
   </data>
   <data name="SignOut" xml:space="preserve">
     <value>Sign Out</value>
+  </data>
+  <data name="Startdate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Submissiondate" xml:space="preserve">
+    <value>Submission Date</value>
   </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>
@@ -342,331 +324,46 @@
   <data name="Title" xml:space="preserve">
     <value>Title</value>
   </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
   <data name="Url" xml:space="preserve">
     <value>Url</value>
-  </data>
-  <data name="Username" xml:space="preserve">
-    <value>Username</value>
-  </data>
-  <data name="Workingdays" xml:space="preserve">
-    <value>Working Days</value>
-  </data>
-  <data name="AddHoliday" xml:space="preserve">
-    <value>Add Holiday</value>
-  </data>
-  <data name="Configuration" xml:space="preserve">
-    <value>Configuration</value>
-  </data>
-  <data name="Holiday" xml:space="preserve">
-    <value>Holiday</value>
-  </data>
-  <data name="Holidaydate" xml:space="preserve">
-    <value>Holiday Date</value>
-  </data>
-  <data name="HolidayList" xml:space="preserve">
-    <value>Holiday List</value>
-  </data>
-  <data name="AddNonBusinessDay" xml:space="preserve">
-    <value>Add Non Business Day</value>
-  </data>
-  <data name="EditNonBusinessDay" xml:space="preserve">
-    <value>Edit Non Business Day</value>
-  </data>
-  <data name="NonBusinessDay" xml:space="preserve">
-    <value>Non Business Day</value>
-  </data>
-  <data name="NonBusinessDayList" xml:space="preserve">
-    <value>Non Business Day List</value>
-  </data>
-  <data name="Displayname" xml:space="preserve">
-    <value>Display Name</value>
-  </data>
-  <data name="Value" xml:space="preserve">
-    <value>Value</value>
-  </data>
-  <data name="Active" xml:space="preserve">
-    <value>Active</value>
-  </data>
-  <data name="AddServiceSchedule" xml:space="preserve">
-    <value>Add Service Schedule</value>
-  </data>
-  <data name="Enddate" xml:space="preserve">
-    <value>End Date</value>
-  </data>
-  <data name="Scheduledappointments" xml:space="preserve">
-    <value>Scheduled Appointments</value>
-  </data>
-  <data name="ServiceSchedule" xml:space="preserve">
-    <value>Service Schedule</value>
-  </data>
-  <data name="ServiceScheduleList" xml:space="preserve">
-    <value>Service Schedule List</value>
-  </data>
-  <data name="Startdate" xml:space="preserve">
-    <value>Start Date</value>
-  </data>
-  <data name="Status" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="ManageCorporates" xml:space="preserve">
-    <value>Manage Corporates</value>
-  </data>
-  <data name="ManageCorporateServices" xml:space="preserve">
-    <value>Manage Corporate Services</value>
-  </data>
-  <data name="AdvancedSettings" xml:space="preserve">
-    <value>Advanced Settings</value>
-  </data>
-  <data name="Corporates" xml:space="preserve">
-    <value>Corporates</value>
-  </data>
-  <data name="GlobalSettings" xml:space="preserve">
-    <value>Global Settings</value>
-  </data>
-  <data name="Services" xml:space="preserve">
-    <value>Services</value>
-  </data>
-  <data name="Appointments" xml:space="preserve">
-    <value>Appointments</value>
-  </data>
-  <data name="Idservice" xml:space="preserve">
-    <value>Id Service</value>
-  </data>
-  <data name="ManageAppointments" xml:space="preserve">
-    <value>Manage Appointments</value>
-  </data>
-  <data name="Details" xml:space="preserve">
-    <value>Details</value>
-  </data>
-  <data name="Idserviceschedule" xml:space="preserve">
-    <value>Id service schedule</value>
-  </data>
-  <data name="Idservicescheduledetails" xml:space="preserve">
-    <value>Id service schedule details</value>
-  </data>
-  <data name="Linkedmaxappointments" xml:space="preserve">
-    <value>Linked max appointments</value>
-  </data>
-  <data name="Linkedscheduledappointments" xml:space="preserve">
-    <value>Linked scheduled appointments</value>
-  </data>
-  <data name="Linkedscheduledappointments byadmin" xml:space="preserve">
-    <value>Linked scheduled appointments by admin</value>
-  </data>
-  <data name="Linkedscheduledappointments byuser" xml:space="preserve">
-    <value>Linked scheduled appointments by user</value>
-  </data>
-  <data name="Scheduledappointments byadmin" xml:space="preserve">
-    <value>Scheduled Appointments by admin</value>
-  </data>
-  <data name="Scheduledappointments byuser" xml:space="preserve">
-    <value>Scheduled Appointments by user</value>
-  </data>
-  <data name="Scheduledate" xml:space="preserve">
-    <value>Schedule date</value>
-  </data>
-  <data name="Totalmaxappointments" xml:space="preserve">
-    <value>Total max appointments</value>
-  </data>
-  <data name="Totalscheduledappointments" xml:space="preserve">
-    <value>Total scheduled appointments</value>
-  </data>
-  <data name="AppointmentList" xml:space="preserve">
-    <value>Appointment List</value>
-  </data>
-  <data name="ServiceScheduleDetails" xml:space="preserve">
-    <value>Service Schedule Details</value>
-  </data>
-  <data name="AppointmentDailyByNumberList" xml:space="preserve">
-    <value>Daily Appointment By Number List</value>
-  </data>
-  <data name="AppointmentDailyList" xml:space="preserve">
-    <value>Daily Appointment List</value>
-  </data>
-  <data name="DailyAppointments" xml:space="preserve">
-    <value>Daily Appointment</value>
-  </data>
-  <data name="DailyAppointmentsByNumber" xml:space="preserve">
-    <value>Daily Appointment By Number</value>
-  </data>
-  <data name="Month" xml:space="preserve">
-    <value>Month</value>
-  </data>
-  <data name="Search" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="Year" xml:space="preserve">
-    <value>Year</value>
-  </data>
-  <data name="AddAppointmentDailyByNumber" xml:space="preserve">
-    <value>Add Appointment</value>
-  </data>
-  <data name="Appointmentdate" xml:space="preserve">
-    <value>Appointment Date</value>
-  </data>
-  <data name="Apptype" xml:space="preserve">
-    <value>App Type</value>
-  </data>
-  <data name="Countername" xml:space="preserve">
-    <value>Counter Name</value>
-  </data>
-  <data name="EditAppointmentDailyByNumber" xml:space="preserve">
-    <value>Edit Appointment</value>
-  </data>
-  <data name="ServiceRequirement" xml:space="preserve">
-    <value>Service Requirement</value>
-  </data>
-  <data name="Submissiondate" xml:space="preserve">
-    <value>Submission Date</value>
-  </data>
-  <data name="Service Schedule" xml:space="preserve">
-    <value>Service Schedule</value>
-  </data>
-  <data name="Displayorder" xml:space="preserve">
-    <value>Display Order</value>
-  </data>
-  <data name="Appointmentmaxdays" xml:space="preserve">
-    <value>Appointment Max Days</value>
-  </data>
-  <data name="Openingdayscount" xml:space="preserve">
-    <value>Opening days count</value>
-  </data>
-  <data name="Schedulingdaybeforeendofappointments" xml:space="preserve">
-    <value>Scheduling day before end of appointments</value>
-  </data>
-  <data name="AddAppointmentDaily" xml:space="preserve">
-    <value>Add Appointment Daily</value>
-  </data>
-  <data name="Appointmentsperworkingday" xml:space="preserve">
-    <value>Appointments per working day</value>
-  </data>
-  <data name="Groupname" xml:space="preserve">
-    <value>Group Name</value>
-  </data>
-  <data name="Message" xml:space="preserve">
-    <value>Message</value>
-  </data>
-  <data name="Rescheduledate" xml:space="preserve">
-    <value>Reschedule date</value>
-  </data>
-  <data name="EditServiceSchedule" xml:space="preserve">
-    <value>Edit Service Schedule</value>
-  </data>
-  <data name="Maxappointmentperday" xml:space="preserve">
-    <value>Max appointment per day</value>
-  </data>
-  <data name="Maxcorporateappointmentperday" xml:space="preserve">
-    <value>Max corporate appointment per day</value>
-  </data>
-  <data name="AddCorporateGroup" xml:space="preserve">
-    <value>Add Corporate Group</value>
-  </data>
-  <data name="CorporateGroup" xml:space="preserve">
-    <value>Corporate Group</value>
-  </data>
-  <data name="CorporateGroupList" xml:space="preserve">
-    <value>Corporate Group List</value>
-  </data>
-  <data name="EditCorporateGroup" xml:space="preserve">
-    <value>Edit Corporate Group</value>
-  </data>
-  <data name="Day" xml:space="preserve">
-    <value>Day</value>
-  </data>
-  <data name="Added Date" xml:space="preserve">
-    <value>Added Date</value>
-  </data>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>Change Password</value>
-  </data>
-  <data name="Confirm Password" xml:space="preserve">
-    <value>Confirm Password</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="Full Name" xml:space="preserve">
-    <value>Full Name</value>
-  </data>
-  <data name="Phone" xml:space="preserve">
-    <value>Phone</value>
-  </data>
-  <data name="Role" xml:space="preserve">
-    <value>Role</value>
   </data>
   <data name="User Name" xml:space="preserve">
     <value>User Name</value>
   </data>
+  <data name="UserManagement" xml:space="preserve">
+    <value>User Management</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
   <data name="Web Role" xml:space="preserve">
+    <value>Web Role</value>
+  </data>
+  <data name="WebRole" xml:space="preserve">
     <value>Web Role</value>
   </data>
   <data name="WebRoles" xml:space="preserve">
     <value>Web Roles</value>
   </data>
-  <data name="WebUsers" xml:space="preserve">
-    <value>Web Users</value>
-  </data>
-  <data name="Sections" xml:space="preserve">
-    <value>Sections</value>
-  </data>
-  <data name="Update" xml:space="preserve">
-    <value>Update</value>
-  </data>
-  <data name="View" xml:space="preserve">
-    <value>View</value>
-  </data>
-  <data name="AdvancedSettingsList" xml:space="preserve">
-    <value>Advanced Settings List</value>
-  </data>
-  <data name="EnterServiceType" xml:space="preserve">
-    <value>Enter Service Type</value>
-  </data>
-  <data name="ServiceType" xml:space="preserve">
-    <value>Service Type</value>
-  </data>
-  <data name="BuildingNumber" xml:space="preserve">
-    <value>BuildingNumber</value>
-  </data>
-  <data name="MaxappointmentsServiceLink" xml:space="preserve">
-    <value>Max Appointments</value>
-  </data>
-  <data name="ConfirmNewPassword" xml:space="preserve">
-    <value>Confirm New Password</value>
-  </data>
-  <data name="EditProfile" xml:space="preserve">
-    <value>Edit Profile</value>
-  </data>
-  <data name="NewPassword" xml:space="preserve">
-    <value>New Password</value>
-  </data>
-  <data name="OldPassword" xml:space="preserve">
-    <value>Old Password</value>
-  </data>
-  <data name="UserManagement" xml:space="preserve">
-    <value>User Management</value>
-  </data>
-  <data name="WebRole" xml:space="preserve">
-    <value>Web Role</value>
-  </data>
   <data name="WebRolesList" xml:space="preserve">
     <value>Web Roles List</value>
+  </data>
+  <data name="WebUsers" xml:space="preserve">
+    <value>Web Users</value>
   </data>
   <data name="WebUsersList" xml:space="preserve">
     <value>Web Users List</value>
   </data>
-  <data name="CPFT" xml:space="preserve">
-    <value>Change Password</value>
-  </data>
-  <data name="NoDataFound" xml:space="preserve">
-    <value>No Data Found</value>
-  </data>
-  <data name="Displaying" xml:space="preserve">
-    <value>Displaying</value>
-  </data>
-  <data name="RecordsPerPage" xml:space="preserve">
-    <value>records per page</value>
-  </data>
-  <data name="ServiceScheduleDetailsUpdate" xml:space="preserve">
-    <value>Service Schedule Details Update</value>
+  <data name="Year" xml:space="preserve">
+    <value>Year</value>
   </data>
 </root>

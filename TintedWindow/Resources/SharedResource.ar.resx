@@ -123,77 +123,14 @@
   <data name="Add" xml:space="preserve">
     <value>أضف</value>
   </data>
-  <data name="AddCategory" xml:space="preserve">
-    <value>أضف القسم</value>
-  </data>
-  <data name="AddCorporate" xml:space="preserve">
-    <value>إضافة شركة</value>
-  </data>
-  <data name="AddCorporateService" xml:space="preserve">
-    <value>إضافة خدمة الشركات</value>
-  </data>
-  <data name="AddCounter" xml:space="preserve">
-    <value>أضف الشباك</value>
-  </data>
-  <data name="AddLocation" xml:space="preserve">
-    <value>أضف الموقع</value>
-  </data>
   <data name="AddNew" xml:space="preserve">
     <value>إضافة جديد</value>
-  </data>
-  <data name="AddServiceLink" xml:space="preserve">
-    <value>إضافة رابط الخدمة</value>
-  </data>
-  <data name="Announcement" xml:space="preserve">
-    <value>الإعلانات</value>
-  </data>
-  <data name="AnnouncementList" xml:space="preserve">
-    <value>قائمة الإعلانات</value>
-  </data>
-  <data name="Appointmentwaitdays" xml:space="preserve">
-    <value>أيام الانتظار بين المراحل</value>
   </data>
   <data name="AreUSure" xml:space="preserve">
     <value>هل أنت متأكد؟</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>إلغاء</value>
-  </data>
-  <data name="Category" xml:space="preserve">
-    <value>الأقسام</value>
-  </data>
-  <data name="CategoryList" xml:space="preserve">
-    <value>قائمة الأقسام</value>
-  </data>
-  <data name="Content" xml:space="preserve">
-    <value>المحتوى</value>
-  </data>
-  <data name="Corporate" xml:space="preserve">
-    <value>شركة</value>
-  </data>
-  <data name="CorporateList" xml:space="preserve">
-    <value>قائمة الشركات</value>
-  </data>
-  <data name="Corporatename" xml:space="preserve">
-    <value>اسم الشركة</value>
-  </data>
-  <data name="CorporateService" xml:space="preserve">
-    <value>خدمة الشركات</value>
-  </data>
-  <data name="CorporateServiceList" xml:space="preserve">
-    <value>قائمة خدمات مجموعة الشركات</value>
-  </data>
-  <data name="Counter" xml:space="preserve">
-    <value>الشبابيك</value>
-  </data>
-  <data name="CounterList" xml:space="preserve">
-    <value>قائمة الشبابيك</value>
-  </data>
-  <data name="Counternumber" xml:space="preserve">
-    <value>رقم الشباك</value>
-  </data>
-  <data name="Counters" xml:space="preserve">
-    <value>الشبابيك</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>التاريخ</value>
@@ -218,27 +155,6 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>تعديل</value>
-  </data>
-  <data name="EditCategory" xml:space="preserve">
-    <value>تعديل القسم</value>
-  </data>
-  <data name="EditCorporate" xml:space="preserve">
-    <value>تعديل الشركة</value>
-  </data>
-  <data name="EditCorporateService" xml:space="preserve">
-    <value>تعديل خدمة الشركات</value>
-  </data>
-  <data name="EditCounter" xml:space="preserve">
-    <value>تعديل الشباك</value>
-  </data>
-  <data name="EditLocation" xml:space="preserve">
-    <value>تعديل الموقع</value>
-  </data>
-  <data name="EditServiceLink" xml:space="preserve">
-    <value>تعديل رابط الخدمة</value>
-  </data>
-  <data name="EnterContent" xml:space="preserve">
-    <value>أدخل المحتوى</value>
   </data>
   <data name="EnterDate" xml:space="preserve">
     <value>أدخل التاريخ</value>
@@ -273,26 +189,11 @@
   <data name="Location" xml:space="preserve">
     <value>موقع البناء</value>
   </data>
-  <data name="LocationList" xml:space="preserve">
-    <value>قائمة الموقع</value>
-  </data>
-  <data name="Maxappointments" xml:space="preserve">
-    <value>الحد الأقصى للمواعيد</value>
-  </data>
   <data name="Name" xml:space="preserve">
     <value>الإسم</value>
   </data>
   <data name="Neededdocs" xml:space="preserve">
     <value>المستندات المطلوبة</value>
-  </data>
-  <data name="Nextidservice" xml:space="preserve">
-    <value>Next Id Service</value>
-  </data>
-  <data name="Nextservicename" xml:space="preserve">
-    <value>اسم الخدمة التالية</value>
-  </data>
-  <data name="Nextservice" xml:space="preserve">
-    <value>الخدمة التالية</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>موافق</value>
@@ -311,21 +212,6 @@
   </data>
   <data name="Search..." xml:space="preserve">
     <value>بحث...</value>
-  </data>
-  <data name="Service" xml:space="preserve">
-    <value>الخدمة</value>
-  </data>
-  <data name="ServiceLink" xml:space="preserve">
-    <value>الخدمات المترابطة</value>
-  </data>
-  <data name="ServiceLinkList" xml:space="preserve">
-    <value>قائمة الخدمات المترابطة</value>
-  </data>
-  <data name="ServiceList" xml:space="preserve">
-    <value>قائمة الخدمات</value>
-  </data>
-  <data name="Servicename" xml:space="preserve">
-    <value>اسم الخدمة</value>
   </data>
   <data name="SignIn" xml:space="preserve">
     <value>تسجيل الدخول</value>
@@ -351,32 +237,8 @@
   <data name="Workingdays" xml:space="preserve">
     <value>أيام العمل</value>
   </data>
-  <data name="AddHoliday" xml:space="preserve">
-    <value>إضافة إجازة</value>
-  </data>
   <data name="Configuration" xml:space="preserve">
     <value>Configuration</value>
-  </data>
-  <data name="Holiday" xml:space="preserve">
-    <value>الإجازات الرسمية</value>
-  </data>
-  <data name="Holidaydate" xml:space="preserve">
-    <value>تاريخ الإجازة</value>
-  </data>
-  <data name="HolidayList" xml:space="preserve">
-    <value>قائمة الإجازات الرسمية</value>
-  </data>
-  <data name="AddNonBusinessDay" xml:space="preserve">
-    <value>إضافة يوم العطلة</value>
-  </data>
-  <data name="EditNonBusinessDay" xml:space="preserve">
-    <value>تعديل يوم العطلة</value>
-  </data>
-  <data name="NonBusinessDay" xml:space="preserve">
-    <value>أيام الأعطال</value>
-  </data>
-  <data name="NonBusinessDayList" xml:space="preserve">
-    <value>قائمة أيام الأعطال</value>
   </data>
   <data name="Displayname" xml:space="preserve">
     <value>إسم العرض</value>
@@ -387,20 +249,8 @@
   <data name="Active" xml:space="preserve">
     <value>Active</value>
   </data>
-  <data name="AddServiceSchedule" xml:space="preserve">
-    <value>إضافة جدول مواعيد الخدمة</value>
-  </data>
   <data name="Enddate" xml:space="preserve">
     <value>تاريخ الانتهاء</value>
-  </data>
-  <data name="Scheduledappointments" xml:space="preserve">
-    <value>المواعيد المتخدة</value>
-  </data>
-  <data name="Service Schedule" xml:space="preserve">
-    <value>جدول الخدمات</value>
-  </data>
-  <data name="ServiceScheduleList" xml:space="preserve">
-    <value>قائمة جدول الخدمات</value>
   </data>
   <data name="Startdate" xml:space="preserve">
     <value>تاريخ البدء</value>
@@ -408,89 +258,8 @@
   <data name="Status" xml:space="preserve">
     <value>الحالة</value>
   </data>
-  <data name="ServiceSchedule" xml:space="preserve">
-    <value>جدول الخدمات</value>
-  </data>
-  <data name="ManageCorporates" xml:space="preserve">
-    <value>إدارة الشركات</value>
-  </data>
-  <data name="ManageCorporateServices" xml:space="preserve">
-    <value>إدارة خدمات مجموعة الشركات</value>
-  </data>
-  <data name="AdvancedSettings" xml:space="preserve">
-    <value>الإعدادات المتطورة</value>
-  </data>
-  <data name="Corporates" xml:space="preserve">
-    <value>الشركات</value>
-  </data>
-  <data name="GlobalSettings" xml:space="preserve">
-    <value>الإعدادات العامة</value>
-  </data>
-  <data name="Services" xml:space="preserve">
-    <value>الخدمات</value>
-  </data>
-  <data name="Appointments" xml:space="preserve">
-    <value>المواعيد</value>
-  </data>
-  <data name="Idservice" xml:space="preserve">
-    <value>Id Service</value>
-  </data>
-  <data name="ManageAppointments" xml:space="preserve">
-    <value>إدارة المواعيد</value>
-  </data>
   <data name="Details" xml:space="preserve">
     <value>التفاصيل</value>
-  </data>
-  <data name="Idserviceschedule" xml:space="preserve">
-    <value>Id service schedule</value>
-  </data>
-  <data name="Idservicescheduledetails" xml:space="preserve">
-    <value>Id service schedule details</value>
-  </data>
-  <data name="Linkedmaxappointments" xml:space="preserve">
-    <value>Linked max appointments</value>
-  </data>
-  <data name="Linkedscheduledappointments" xml:space="preserve">
-    <value>Linked scheduled appointments</value>
-  </data>
-  <data name="Linkedscheduledappointments byadmin" xml:space="preserve">
-    <value>Linked scheduled appointments by admin</value>
-  </data>
-  <data name="Linkedscheduledappointments byuser" xml:space="preserve">
-    <value>Linked scheduled appointments by user</value>
-  </data>
-  <data name="Scheduledappointments byadmin" xml:space="preserve">
-    <value>Scheduled Appointments by admin</value>
-  </data>
-  <data name="Scheduledappointments byuser" xml:space="preserve">
-    <value>Scheduled Appointments by user</value>
-  </data>
-  <data name="Scheduledate" xml:space="preserve">
-    <value>تاريخ </value>
-  </data>
-  <data name="Totalmaxappointments" xml:space="preserve">
-    <value>Total max appointments</value>
-  </data>
-  <data name="Totalscheduledappointments" xml:space="preserve">
-    <value>Total scheduled appointments</value>
-  </data>
-  <data name="AppointmentList" xml:space="preserve">
-    <value>قائمة المواعيد</value>
-  </data>
-  <data name="ServiceScheduleDetails" xml:space="preserve">
-    <value>تفاصيل جدول مواعيد الخدمة</value>
-  </data>
-  <data name="AppointmentDailyByNumberList" xml:space="preserve">
-    <value>قائمة المواعيد اليومية حسب الرقم</value>
-  </data>
-  <data name="AppointmentDailyList" xml:space="preserve">
-    <value>قائمة المواعيد اليومية</value>
-  </data>
-  <data name="DailyAppointments" xml:space="preserve">
-    <value>المواعيد اليومية</value>
-  </data>
-  <data name="DailyAppointmentsByNumber" xml:space="preserve">
-    <value>المواعيد اليومية حسب الرقم</value>
   </data>
   <data name="Month" xml:space="preserve">
     <value>الشهر</value>
@@ -501,74 +270,17 @@
   <data name="Year" xml:space="preserve">
     <value>السنة</value>
   </data>
-  <data name="AddAppointmentDailyByNumber" xml:space="preserve">
-    <value>إضافة موعد </value>
-  </data>
-  <data name="Appointmentdate" xml:space="preserve">
-    <value>تاريخ الموعد</value>
-  </data>
-  <data name="Apptype" xml:space="preserve">
-    <value>نوع التطبيق</value>
-  </data>
-  <data name="Countername" xml:space="preserve">
-    <value>اسم الشباك</value>
-  </data>
-  <data name="EditAppointmentDailyByNumber" xml:space="preserve">
-    <value>تعديل الموعد</value>
-  </data>
-  <data name="ServiceRequirement" xml:space="preserve">
-    <value>متطلبات الخدمة</value>
-  </data>
   <data name="Submissiondate" xml:space="preserve">
     <value>تاريخ التقديم</value>
   </data>
   <data name="Displayorder" xml:space="preserve">
     <value>الترتيب</value>
   </data>
-  <data name="Appointmentmaxdays" xml:space="preserve">
-    <value>الحد الأقصى للموعد التالي (بالأيام)</value>
-  </data>
-  <data name="Openingdayscount" xml:space="preserve">
-    <value>فترة المواعيد المتاحة (بالأيام)</value>
-  </data>
-  <data name="Schedulingdaybeforeendofappointments" xml:space="preserve">
-    <value>عدد الأيام السابقة لفتح المواعيد</value>
-  </data>
-  <data name="AddAppointmentDaily" xml:space="preserve">
-    <value>إضافة موعد يومي</value>
-  </data>
-  <data name="Appointmentsperworkingday" xml:space="preserve">
-    <value>المواعيد في يوم العمل</value>
-  </data>
-  <data name="Groupname" xml:space="preserve">
-    <value>اسم المجموعة</value>
-  </data>
   <data name="Message" xml:space="preserve">
     <value>الرسالة</value>
   </data>
   <data name="Rescheduledate" xml:space="preserve">
     <value>تاريخ إعادة الجدولة</value>
-  </data>
-  <data name="EditServiceSchedule" xml:space="preserve">
-    <value>تعديل جدول مواعيد الخدمة</value>
-  </data>
-  <data name="Maxappointmentperday" xml:space="preserve">
-    <value>الحد الأقصى للموعد في اليوم</value>
-  </data>
-  <data name="Maxcorporateappointmentperday" xml:space="preserve">
-    <value>الحد الأقصى لمواعيد الشركات في اليوم</value>
-  </data>
-  <data name="AddCorporateGroup" xml:space="preserve">
-    <value>إضافة مجموعة الشركات</value>
-  </data>
-  <data name="CorporateGroup" xml:space="preserve">
-    <value>مجموعة الشركات</value>
-  </data>
-  <data name="CorporateGroupList" xml:space="preserve">
-    <value>قائمة مجموعات الشركات</value>
-  </data>
-  <data name="EditCorporateGroup" xml:space="preserve">
-    <value>تعديل مجموعة الشركات</value>
   </data>
   <data name="Day" xml:space="preserve">
     <value>اليوم</value>
@@ -615,21 +327,6 @@
   <data name="View" xml:space="preserve">
     <value>عرض</value>
   </data>
-  <data name="AdvancedSettingsList" xml:space="preserve">
-    <value>قائمة الإعدادات المتطورة</value>
-  </data>
-  <data name="EnterServiceType" xml:space="preserve">
-    <value>أدخل نوع الخدمة</value>
-  </data>
-  <data name="ServiceType" xml:space="preserve">
-    <value>نوع الخدمة</value>
-  </data>
-  <data name="BuildingNumber" xml:space="preserve">
-    <value>رقم البناء</value>
-  </data>
-  <data name="MaxappointmentsServiceLink" xml:space="preserve">
-    <value>الحد الأقصى لمواعيد المرحلة التالية</value>
-  </data>
   <data name="ConfirmNewPassword" xml:space="preserve">
     <value>Confirm New Password</value>
   </data>
@@ -666,7 +363,10 @@
   <data name="RecordsPerPage" xml:space="preserve">
     <value>سجلات في كل صفحة</value>
   </data>
-  <data name="ServiceScheduleDetailsUpdate" xml:space="preserve">
-    <value>تحديث تفاصيل جدول مواعيد الخدمة</value>
+  <data name="application" xml:space="preserve">
+    <value>الطلب</value>
+  </data>
+  <data name="applicationList" xml:space="preserve">
+    <value>قائمة الطلبات</value>
   </data>
 </root>
