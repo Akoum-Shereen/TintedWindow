@@ -1,0 +1,618 @@
+﻿@using TintedWindow.Extensions
+@using TintedWindow.Models.Requests
+@using Newtonsoft.Json
+@using System.Security.Claims
+@{
+    var controllerName = HelperExtensions.GetRequiredString(Html.ViewContext.RouteData, "controller").ToLower();
+    var actionName = HelperExtensions.GetRequiredString(Html.ViewContext.RouteData, "action").ToLower();
+
+    var setV = false;
+
+    #region UserConfiguration
+    bool isEdit_profile = setV;
+    bool isChange_password = setV;
+    #endregion
+
+    #region UserManagement
+    bool isUserManagement = setV;
+    bool isWebUser = setV;
+    bool isWebRole = setV;
+    #endregion
+
+    #region Corporate
+    bool isCorporate = setV;
+    bool isCorporateGroup = setV;
+    bool isCorporateService = setV;
+    #endregion
+
+    #region Service
+    bool isCategory = setV;
+    bool isService = setV;
+    bool isServiceLink = setV;
+    #endregion
+
+    #region Appointments
+    bool isAppointment = setV;
+    bool isAppointmentDaily = setV;
+    bool isAppointmentDailyByNumber = setV;
+    bool isServiceSchedule = setV;
+    #endregion
+
+    #region Announcements
+    bool isAnnouncement = setV;
+    #endregion
+
+    #region GlobalSettings
+    bool isGlobalConfig = setV;
+    bool isHoliday = setV;
+    bool isNonBusinessDay = setV;
+    #endregion
+
+    #region Locations
+    bool isLocation = setV;
+    #endregion
+
+    #region Counters
+    bool isCounter = setV;
+    #endregion
+
+    var sessionName = "maindata_" + User.FindFirstValue("Username");
+    var sectionsString = Accessor.HttpContext.Session.GetString(sessionName);
+    var ListSections = !string.IsNullOrEmpty(sectionsString) ? JsonConvert.DeserializeObject<List<Section>>(sectionsString) : new List<Section>();
+
+    var sessionRouteName = "routedata";
+    var routeSectionsString = Accessor.HttpContext.Session.GetString(sessionRouteName);
+    var ListRoutes = !string.IsNullOrEmpty(routeSectionsString) ? JsonConvert.DeserializeObject<List<RouteObj>>(routeSectionsString) : new List<RouteObj>();
+
+    var viewEnum = HelperExtensions.GetEnumStringValue(TintedWindow.Common.Action.View);
+    var addEnum = HelperExtensions.GetEnumStringValue(TintedWindow.Common.Action.Add);
+    var updateEnum = HelperExtensions.GetEnumStringValue(TintedWindow.Common.Action.Update);
+    var edit_profileEnum = HelperExtensions.GetEnumStringValue(TintedWindow.Common.Action.Edit_profile);
+    var change_passwordEnum = HelperExtensions.GetEnumStringValue(TintedWindow.Common.Action.Change_password);
+
+    foreach (var section in ListSections.Where(x => !string.IsNullOrEmpty(x.computerName)).OrderBy(x => x.computerName))
+    {
+        switch (section.computerName.ToLower().Replace(" ", string.Empty))
+        {
+            case "userconfiguration":
+                isEdit_profile = section.actions.Any(a => a.Trim().ToLower() == edit_profileEnum);
+                isChange_password = section.actions.Any(a => a.Trim().ToLower() == change_passwordEnum);
+                break;
+
+            case "usermanagement":
+                isUserManagement = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+            case "webusers":
+                isWebUser = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+            case "webroles":
+                isWebRole = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+
+            case "corporate":
+                isCorporate = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+            case "corporategroup":
+                isCorporateGroup = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+            case "corporateservice":
+                isCorporateService = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+
+            case "category":
+                isCategory = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+            case "service":
+                isService = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+            case "servicelink":
+                isServiceLink = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+
+            case "manageappointments":
+                isAppointment = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+            case "dailyappointments":
+                isAppointmentDaily = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+            case "dailyappointmentsbynumber":
+                isAppointmentDailyByNumber = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+            case "serviceschedule":
+                isServiceSchedule = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+
+            case "announcement":
+                isAnnouncement = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+
+            case "advancedsettings":
+                isGlobalConfig = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+            case "holiday":
+                isHoliday = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+            case "nonbusinessday":
+                isNonBusinessDay = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+
+            case "location":
+                isLocation = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+
+            case "counter":
+                isCounter = section.actions.Any(a => a.Trim().ToLower() == viewEnum);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    var isCorporates = isCorporate || isCorporateGroup || isCorporateService;
+    var isServices = isCategory || isService || isServiceLink;
+    var isAppointments = isAppointment || isAppointmentDaily || isAppointmentDailyByNumber || isServiceSchedule;
+    var isAnnouncements = isAnnouncement;
+    var isGlobalSettings = isGlobalConfig || isHoliday || isNonBusinessDay;
+    var isLocations = isLocation;
+    var isCounters = isCounter;
+
+    var isUserConfigurationSection = isEdit_profile || isChange_password;
+    var isUserManagementSection = isWebUser || isWebRole;
+}
+
+<div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}"
+     data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
+    <!--begin::Logo-->
+    <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
+        <!--begin::Logo image-->
+        <!--end::Logo image-->
+        <!--begin::Sidebar toggle-->
+        <!--begin::Minimized sidebar setup:-->
+        <div id="kt_app_sidebar_toggle" class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary body-bg h-30px w-30px
+                                               position-absolute top-50 start-100 translate-middle rotate"
+             data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="app-sidebar-minimize">
+            <i class="ki-duotone ki-double-left fs-2 rotate-180">
+                <span class="path1"></span>
+                <span class="path2"></span>
+            </i>
+        </div>
+        <!--end::Sidebar toggle-->
+    </div>
+    <!--end::Logo-->
+    <!--begin::sidebar menu-->
+    <div class="app-sidebar-menu overflow-hidden flex-column-fluid">
+        <!--begin::Menu wrapper-->
+        <div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper hover-scroll-overlay-y my-5" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto"
+             data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu"
+             data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
+            <!--begin::Menu-->
+            <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
+
+                @if (isCorporates)
+                {
+                    var routes = ListRoutes.Where(x => x.computerName.Trim().ToLower() == "corporate" || x.computerName.Trim().ToLower() == "corporategroup" || x.computerName.Trim().ToLower() == "corporateservice");
+                    var route = routes.FirstOrDefault();
+                    var icon = route != null ? route.icon : "<i class='fas fa-folder'></i>";
+                    var link = "";
+                    var displayName = "";
+                    var cN = "";
+
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion  @(controllerName is "corporate" or "corporategroup" or "corporateservice" ? "here show" : "")">
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                @Html.Raw(icon)
+                            </span>
+                            <span class="menu-title">@Localizer["Corporates"]</span><span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion @(controllerName is "corporate" or "corporategroup" or "corporateservice" ? "show" : "")"
+                         kt-hidden-height="128"
+                         style="@(controllerName is "corporate" or "corporategroup" or "corporateservice" ? "" : "display: none; overflow: hidden;")">
+
+                            @if (isCorporate)
+                            {
+                                cN = "corporate";
+                                route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                                link = route != null ? route.link : "Home";
+                                displayName = route != null ? route.displayName : "";
+
+                                <div class="menu-item">
+                                    <a class="menu-link @(controllerName == cN ? "active" : "")" href="@Url.Content("~/" + link)">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">@Localizer[displayName]</span>
+                                    </a>
+                                </div>
+                            }
+                            @if (isCorporateGroup)
+                            {
+                                cN = "corporategroup";
+                                route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                                link = route != null ? route.link : "Home";
+                                displayName = route != null ? route.displayName : "";
+
+                                <div class="menu-item">
+                                    <a class="menu-link @((controllerName == cN) ? "active" : "")" href="@Url.Content("~/" + link)">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">@Localizer[displayName]</span>
+                                    </a>
+                                </div>
+                            }
+                            @if (isCorporateService)
+                            {
+                                cN = "corporateservice";
+                                route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                                link = route != null ? route.link : "Home";
+                                displayName = route != null ? route.displayName : "";
+
+                                <div class="menu-item">
+                                    <a class="menu-link @((controllerName == cN) ? "active" : "")" href="@Url.Content("~/" + link)">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">@Localizer[displayName]</span>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+                @if (isServices)
+                {
+                    var routes = ListRoutes.Where(x => x.computerName.Trim().ToLower() == "category" || x.computerName.Trim().ToLower() == "service" || x.computerName.Trim().ToLower() == "servicelink");
+                    var route = routes.FirstOrDefault();
+                    var icon = route != null ? route.icon : "<i class='fas fa-folder'></i>";
+                    var link = "";
+                    var displayName = "";
+                    var cN = "";
+
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion  @(controllerName is "category" or "service" or "servicelink" ? "here show" : "")">
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                @Html.Raw(icon)
+                            </span>
+                            <span class="menu-title">@Localizer["Services"]</span><span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion @(controllerName is "category" or "service" or "servicelink" ? "show" : "")"
+                         kt-hidden-height="128"
+                         style="@(controllerName is "category" or "service" or "servicelink" ? "" : "display: none; overflow: hidden;")">
+
+                            @if (isCategory)
+                            {
+                                cN = "category";
+                                route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                                link = route != null ? route.link : "Home";
+                                displayName = route != null ? route.displayName : "";
+
+                                <div class="menu-item">
+                                    <a class="menu-link @(controllerName == cN ? "active" : "")" href="@Url.Content("~/" + link)">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">@Localizer[displayName]</span>
+                                    </a>
+                                </div>
+                            }
+                            @if (isService)
+                            {
+                                cN = "service";
+                                route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                                link = route != null ? route.link : "Home";
+                                displayName = route != null ? route.displayName : "";
+
+                                <div class="menu-item">
+                                    <a class="menu-link @((controllerName == cN) ? "active" : "")" href="@Url.Content("~/" + link)">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">@Localizer[displayName]</span>
+                                    </a>
+                                </div>
+                            }
+                            @if (isServiceLink)
+                            {
+                                cN = "servicelink";
+                                route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                                link = route != null ? route.link : "Home";
+                                displayName = route != null ? route.displayName : "";
+
+                                <div class="menu-item">
+                                    <a class="menu-link @((controllerName == cN) ? "active" : "")" href="@Url.Content("~/" + link)">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">@Localizer[displayName]</span>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+                @if (isAppointments)
+                {
+                    var routes = ListRoutes.Where(x => x.computerName.Trim().ToLower() == "manageappointments" || x.computerName.Trim().ToLower() == "dailyappointments" || x.computerName.Trim().ToLower() == "dailyappointmentsbynumber" || x.computerName.Trim().ToLower() == "serviceschedule");
+                    var route = routes.FirstOrDefault();
+                    var icon = route != null ? route.icon : "<i class='fas fa-folder'></i>";
+                    var link = "";
+                    var displayName = "";
+                    var cN = "";
+
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion  @(controllerName is "appointment" or "appointmentdaily" or "appointmentdailybynumber" or "serviceschedule" ? "here show" : "")">
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                @Html.Raw(icon)
+                            </span>
+                            <span class="menu-title">@Localizer["Appointments"]</span><span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion @(controllerName is "appointment" or "appointmentdaily" or "appointmentdailybynumber" or "serviceschedule" ? "show" : "")"
+                         kt-hidden-height="128"
+                         style="@(controllerName is "appointment" or "appointmentdaily" or "appointmentdailybynumber" or "serviceschedule" ? "" : "display: none; overflow: hidden;")">
+
+                            @if (isAppointment)
+                            {
+                                cN = "manageappointments";
+                                var cN1 = "appointment";
+
+                                route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                                link = route != null ? route.link : "Home";
+                                displayName = route != null ? route.displayName : "";
+
+                                <div class="menu-item">
+                                    <a class="menu-link @(controllerName == cN1 ? "active" : "")" href="@Url.Content("~/" + link)">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">@Localizer[displayName]</span>
+                                    </a>
+                                </div>
+                            }
+                            @if (isAppointmentDaily)
+                            {
+                                cN = "dailyappointments";
+                                var cN1 = "appointmentdaily";
+
+                                route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                                link = route != null ? route.link : "Home";
+                                displayName = route != null ? route.displayName : "";
+
+                                <div class="menu-item">
+                                    <a class="menu-link @((controllerName == cN1) ? "active" : "")" href="@Url.Content("~/" + link)">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">@Localizer[displayName]</span>
+                                    </a>
+                                </div>
+                            }
+                            @if (isAppointmentDailyByNumber)
+                            {
+                                cN = "dailyappointmentsbynumber";
+                                var cN1 = "appointmentdailybynumber";
+                                route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                                link = route != null ? route.link : "Home";
+                                displayName = route != null ? route.displayName : "";
+
+                                <div class="menu-item">
+                                    <a class="menu-link @((controllerName == cN1) ? "active" : "")" href="@Url.Content("~/" + link)">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">@Localizer[displayName]</span>
+                                    </a>
+                                </div>
+                            }
+                            @if (isServiceSchedule)
+                            {
+                                cN = "serviceschedule";
+                                route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                                link = route != null ? route.link : "Home";
+                                displayName = route != null ? route.displayName : "";
+
+                                <div class="menu-item">
+                                    <a class="menu-link @((controllerName == cN) ? "active" : "")" href="@Url.Content("~/" + link)">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">@Localizer[displayName]</span>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+                @if (isAnnouncements)
+                {
+                    var cN = "announcement";
+                    var route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                    var link = route != null ? route.link : "Home";
+                    var displayName = route != null ? route.displayName : "";
+                    var icon = route != null ? route.icon : "<i class='fas fa-folder'></i>";
+
+                    <div class="menu-item">
+                        <a class="menu-link @((controllerName == cN) ? "active" : "")"
+                       href="@Url.Content("~/" + link)">
+                            <span class="menu-icon">
+                                @Html.Raw(icon)
+                            </span>
+                            <span class="menu-title">@Localizer[displayName]</span>
+                        </a>
+                    </div>
+                }
+
+                @if (isGlobalSettings)
+                {
+                    var routes = ListRoutes.Where(x => x.computerName.Trim().ToLower() == "advancedsettings" || x.computerName.Trim().ToLower() == "holiday" || x.computerName.Trim().ToLower() == "nonbusinessday");
+                    var route = routes.FirstOrDefault();
+                    var icon = route != null ? route.icon : "<i class='fas fa-folder'></i>";
+                    var link = "";
+                    var displayName = "";
+                    var cN = "";
+
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion  @(controllerName is "globalconfig" or "holiday" or "nonbusinessday" ? "here show" : "")">
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                @Html.Raw(icon)
+                            </span>
+                            <span class="menu-title">@Localizer["GlobalSettings"]</span><span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion @(controllerName is "globalconfig" or "holiday" or "nonbusinessday" ? "show" : "")"
+                         kt-hidden-height="128"
+                         style="@(controllerName is "globalconfig" or "holiday" or "nonbusinessday" ? "" : "display: none; overflow: hidden;")">
+
+                            @if (isGlobalConfig)
+                            {
+                                cN = "advancedsettings";
+                                var cN1 = "globalconfig";
+                                route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                                link = route != null ? route.link : "Home";
+                                displayName = route != null ? route.displayName : "";
+
+                                <div class="menu-item">
+                                    <a class="menu-link @(controllerName == cN1 ? "active" : "")" href="@Url.Content("~/" + link)">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">@Localizer[displayName]</span>
+                                    </a>
+                                </div>
+                            }
+                            @if (isHoliday)
+                            {
+                                cN = "holiday";
+                                route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                                link = route != null ? route.link : "Home";
+                                displayName = route != null ? route.displayName : "";
+
+                                <div class="menu-item">
+                                    <a class="menu-link @((controllerName == cN) ? "active" : "")" href="@Url.Content("~/" + link)">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">@Localizer[displayName]</span>
+                                    </a>
+                                </div>
+                            }
+                            @if (isNonBusinessDay)
+                            {
+                                cN = "nonbusinessday";
+                                route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                                link = route != null ? route.link : "Home";
+                                displayName = route != null ? route.displayName : "";
+
+                                <div class="menu-item">
+                                    <a class="menu-link @((controllerName == cN) ? "active" : "")" href="@Url.Content("~/" + link)">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">@Localizer[displayName]</span>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+                @if (isLocations)
+                {
+                    var cN = "location";
+                    var route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                    var link = route != null ? route.link : "Home";
+                    var displayName = route != null ? route.displayName : "";
+                    var icon = route != null ? route.icon : "<i class='fas fa-folder'></i>";
+
+                    <div class="menu-item">
+                        <a class="menu-link @((controllerName == cN) ? "active" : "")"
+                       href="@Url.Content("~/" + link)">
+                            <span class="menu-icon">
+                                @Html.Raw(icon)
+                            </span>
+                            <span class="menu-title">@Localizer[displayName]</span>
+                        </a>
+                    </div>
+                }
+
+                @if (isCounters)
+                {
+                    var cN = "counter";
+                    var route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                    var link = route != null ? route.link : "Home";
+                    var displayName = route != null ? route.displayName : "";
+                    var icon = route != null ? route.icon : "<i class='fas fa-folder'></i>";
+
+                    <div class="menu-item">
+                        <a class="menu-link @((controllerName == cN) ? "active" : "")"
+                       href="@Url.Content("~/" + link)">
+                            <span class="menu-icon">
+                                @Html.Raw(icon)
+                            </span>
+                            <span class="menu-title">@Localizer[displayName]</span>
+                        </a>
+                    </div>
+                }
+
+                @if (isUserManagementSection)
+                {
+                    var routes = ListRoutes.Where(x => x.computerName.Trim().ToLower() == "webusers" || x.computerName.Trim().ToLower() == "webroles");
+                    var route = routes.FirstOrDefault();
+                    var icon = route != null ? route.icon : "<i class='fas fa-folder'></i>";
+                    var link = "";
+                    var displayName = "";
+                    var cN = "";
+
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion @(controllerName is "webusers" or "webroles" ? "here show" : "")">
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                @Html.Raw(icon)
+                            </span>
+                            <span class="menu-title">@Localizer["UserManagement"]</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion @(controllerName is "webusers"  or "webroles" ? "show" : "")"
+                         kt-hidden-height="128" style="@((controllerName is "webusers" or "webroles") ? "" : "display: none; overflow: hidden;")">
+                            @if (isWebUser)
+                            {
+                                cN = "webusers";
+                                route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                                link = route != null ? route.link : "Home";
+                                displayName = route != null ? route.displayName : "";
+
+                                <div class="menu-item">
+                                    <a class="menu-link @(controllerName == cN ? "active" : "")" href="@Url.Content("~/" + link)">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">@Localizer[displayName]</span>
+                                    </a>
+                                </div>
+                            }
+                            @if (isWebRole)
+                            {
+                                cN = "webroles";
+                                route = ListRoutes.FirstOrDefault(x => x.computerName.Trim().ToLower() == cN);
+                                link = route != null ? route.link : "Home";
+                                displayName = route != null ? route.displayName : "";
+
+                                <div class="menu-item">
+                                    <a class="menu-link @((controllerName == cN) ? "active" : "")" href="@Url.Content("~/" + link)">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">@Localizer[displayName]</span>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+</div>

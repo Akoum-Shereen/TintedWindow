@@ -1,0 +1,16 @@
+{
+  "roles": [
+    {
+      "id": "f911f05a-28f0-4e94-ad1f-0b3599bef6fd",
+      "name": "Admin"
+    },
+    {
+      "id": "956f16ed-1d8f-4402-8e5a-83675b449024",
+      "name": "super admin"
+    }
+  ],
+  "statusCode": {
+    "code": 0,
+    "message": "Success"
+  }
+}

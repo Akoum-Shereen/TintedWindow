@@ -1,0 +1,23 @@
+ [
+  {
+    "Id": "1",
+    "Culture": "en",
+    "Name": "English",
+    "Abr": "EN",
+    "Src": "~/assets/images/flags/iso/us.svg"
+  },
+  {
+    "Id": "2",
+    "Culture": "ar",
+    "Name": "Arabic",
+    "Abr": "AR",
+    "Src": "~/assets/images/flags/iso/ae.svg"
+  },
+  {
+    "Id": "3",
+    "Culture": "fr",
+    "Name": "French",
+    "Abr": "FR",
+    "Src": "~/assets/images/flags/iso/fr.svg"
+  }
+  ]

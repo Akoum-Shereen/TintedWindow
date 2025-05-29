@@ -1,0 +1,72 @@
+{
+  "statusCode": {
+    "code": 0,
+    "message": "string"
+  },
+  "data": {
+    "name": "super admin",
+    "sections": [
+      {
+        "id": "e987fd5f-0f72-4a29-9984-ac2d88b5b351",
+        "actions": [
+          "View",
+          "Add",
+          "Update",
+          "Delete"
+        ],
+        "idServices": [
+          0
+        ]
+      },
+      {
+        "id": "3543dc04-46a4-4e5b-a045-64985852484e",
+        "actions": [
+          "View",
+          "Add",
+          "Update",
+          "Delete"
+        ],
+        "idServices": [
+          0
+        ]
+      },
+      {
+        "id": "f26be20a-cb58-4e2b-b633-1f9e8e48d3fa",
+        "actions": [
+          "View",
+          "Add",
+          "Update",
+          "Delete"
+        ],
+        "idServices": [
+          0
+        ]
+      },
+      {
+        "id": "b3f24be5-61b4-4141-8f67-086cfaf02bad",
+        "actions": [
+          "View",
+          "Add",
+          "Update",
+          "Delete"
+        ],
+        "idServices": [
+          0
+        ]
+      },
+      {
+        "id": "cc6b6c90-8191-411f-b15d-fa42787a58fd",
+        "actions": [
+          "View",
+          "Add",
+          "Update",
+          "Delete"
+        ],
+        "idServices": [
+          0
+        ]
+      }
+
+    ]
+  }
+}

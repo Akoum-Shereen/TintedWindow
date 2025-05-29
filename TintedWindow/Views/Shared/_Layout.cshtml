@@ -1,0 +1,120 @@
+﻿@{
+    var langSelected = (dynamic)ViewData["langSelected"];
+    var culture = ((string)langSelected.Culture) + ".js";
+
+    var staticKey = Configuration.GetValue<string>("Validation:PRIVATE_STATIC_KEY");
+    var projectTitle = Configuration.GetSection("MyConfiguration")["ProjectTitle"];
+    var menuToggle = (ViewData["menuToggle"] != null && ViewData["menuToggle"].ToString() == "0") ? "on" : "off";
+
+}
+<!DOCTYPE html>
+
+@*<html lang="ar" direction="rtl" dir="rtl" style="direction: rtl">*@
+<html direction="@(langSelected.Id != "2" ? "ltr" :"rtl")" lang="@langSelected.Culture" dir="@(langSelected.Id != "2" ? "ltr" :"rtl")">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - @projectTitle</title>
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <!--begin::Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+    <!--end::Fonts -->
+    @if (langSelected.Id != "2")
+    {
+        <!--begin::Global Theme Styles(used by all pages) -->
+        <link href="~/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+        <link href="~/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+        <!--end::Global Theme Styles -->
+    }
+    else
+    {
+        <!--begin::Page Vendor Stylesheets(used by this page)-->
+        <link href="~/assets/plugins/custom/prismjs/prismjs.bundle.rtl.css" rel="stylesheet" type="text/css" />
+        <!--end::Page Vendor Stylesheets-->
+        <!--begin::Global Stylesheets Bundle(used by all pages)-->
+        <link href="~/assets/plugins/global/plugins.bundle.rtl.css" rel="stylesheet" type="text/css" />
+        <link href="~/assets/css/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
+        <!--end::Global Stylesheets Bundle-->
+    }
+
+
+    <link rel="shortcut icon" href="~/favicon.ico" />
+
+    <environment>
+        @RenderSection("PageStyles", false)
+    </environment>
+
+</head>
+@*light-sidebar*@
+<body id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true"
+      data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true"
+      data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true"
+      data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true" class="app-default"
+      data-kt-app-sidebar-minimize="@menuToggle">
+
+    <script>
+              var defaultThemeMode = "light";
+        var themeMode;
+        if (document.documentElement) {
+            if (document.documentElement.hasAttribute("data-bs-theme-mode")) {
+                themeMode = document.documentElement.getAttribute("data-bs-theme-mode");
+            }
+            else {
+                if (localStorage.getItem("data-bs-theme") !== null) {
+                    themeMode = localStorage.getItem("data-bs-theme");
+                }
+                else {
+                    themeMode = defaultThemeMode;
+                }
+            }
+            if (themeMode === "system") {
+                themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            }
+            document.documentElement.setAttribute("data-bs-theme", themeMode);
+        }
+    </script>
+
+    <div class="d-flex flex-column flex-root" id="kt_app_root">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+                <div id="kt_app_header" class="app-header">
+                    @await Html.PartialAsync("_Navbar")
+                </div>
+                <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
+                    @await Html.PartialAsync("_LeftMenu")
+                    @RenderBody()
+                </div>
+            </div>
+        }
+        else
+        {
+            @RenderBody()
+        }
+    </div>
+
+    @Html.Hidden("routUrl", Url.Content("~/"))
+    @Html.Hidden("imgUrl", @Configuration.GetSection("MyConfiguration")["imgUrl"])
+    <script>
+        var xyzwebkappesecygen = @Html.Raw(staticKey);
+    </script>
+    <script src="~/js/Localization/localiser-@culture" type="text/javascript" asp-append-version="true"></script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/aes.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/assets/plugins/global/plugins.bundle.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/assets/js/scripts.bundle.js" type="text/javascript" asp-append-version="true"></script>
+
+    <environment>
+        @RenderSection("Scripts", false)
+    </environment>
+
+</body>
+
+</html>
+

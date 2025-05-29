@@ -1,0 +1,22 @@
+{
+  "list": [
+    {
+      "id": "f911f05a-28f0-4e94-ad1f-0b3599bef6fd",
+      "name": "Admin",
+      "addedDate": "17 AUG 2023 - 03:54 PM",
+      "mobileOperator": null
+    },
+    {
+      "id": "956f16ed-1d8f-4402-8e5a-83675b449024",
+      "name": "super admin",
+      "addedDate": "17 AUG 2023 - 12:21 PM",
+      "mobileOperator": null
+    }
+  ],
+  "totalCount": 2,
+  "filteredCount": 2,
+  "statusCode": {
+    "code": 0,
+    "message": "Success"
+  }
+}

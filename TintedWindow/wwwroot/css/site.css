@@ -1,0 +1,233 @@
+
+
+body {
+    font-family: DroidKufi, sans-serif !important;
+}
+
+.menu-item .menu-link .menu-title {
+    font-size: 14px !important;
+    font-weight: bold !important;
+}
+/*blur region*/
+#webApp-LoginPage, #kt_reset_password_main {
+    margin: auto !important;
+    position: relative;
+    box-shadow: 0px 2px 6px #0000001F !important;
+    background-color: rgb(30 30 45 / 50%) !important;
+    overflow: hidden !important;
+}
+
+[data-bs-theme=light] #webApp-LoginPage,
+[data-bs-theme=light] #kt_reset_password_main {
+    background-color: rgb(255 255 255 / 50%) !important;
+}
+
+#webApp-LoginPage #viewContainer,
+#kt_reset_password_main #viewContainer {
+    padding: 0 !important;
+    z-index: 2;
+}
+
+.blur-filter {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    display: block;
+    margin: -65px;
+}
+/*blur region*/
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: unset !important;
+}
+
+.circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+span.dtr-title {
+    padding-right: 10px !important;
+}
+
+#kt_sign_in_forgot_password {
+    cursor: pointer;
+}
+
+#ViewWhiteGreyBlackDevicesDanger {
+    display: none;
+}
+
+.hidebtn {
+    display: none !important;
+}
+
+.ch-list-wrapper {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    font-size: 12px;
+}
+
+    .ch-list-wrapper .ch-main-box {
+        border-radius: 7px;
+        margin-bottom: 13px;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 10px;
+    }
+
+
+.ch-sub-item .title, .ch-main-box > .title {
+    width: 18%;
+    min-width: 200px;
+    float: left;
+}
+
+.ch-main-box > .title, .ch-main-box > .ch-list {
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    list-style-type: none;
+}
+
+.ch-main-box > .ch-list {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.ch-list {
+    padding-top: 4px;
+}
+
+.ch-list-wrapper .ch-main-box .ch-list .ch-ssub-item {
+    display: inline-block;
+    margin-left: 0px;
+    position: relative;
+    padding-left: 6px;
+    margin-right: 33px;
+}
+
+.ch-list-wrapper .ch-main-box label {
+    display: inline-block;
+    position: relative;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+    cursor: pointer;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    /*    font-size: 13px;
+    font-weight: 500;*/
+    text-transform: capitalize;
+}
+
+.ch-list-wrapper .ch-main-box .ch-sub-list label, .ch-list-wrapper .ch-main-box .ch-list label {
+    font-size: 11px;
+    font-weight: normal;
+    padding-left: 19px;
+}
+
+.ch-list input {
+    top: 3px;
+    position: relative;
+    margin-right: 1px;
+    left: -2px;
+}
+
+.controller input[type=checkbox] {
+    top: 2px;
+    position: absolute;
+    left: 0;
+}
+
+.ch-list-wrapper .ch-main-box .ch-ssub-list .ch-ssub-item {
+    display: inline-block;
+    margin-left: 0px;
+    position: relative;
+    padding-left: 24px;
+    margin-right: 15px;
+}
+
+.error {
+    color: #f1416c;
+}
+
+.swal-wide {
+    width: 850px !important;
+}
+
+/*#participantPartialViewButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+}*/
+table thead {
+    font-weight: bold;
+    color: var(--bs-primary);
+}
+
+#logoImage {
+    height: 40px;
+}
+
+.iconBtn {
+    cursor: pointer
+}
+
+.form-select.is-invalid ~ .select2-container--bootstrap5 .select2-selection {
+    border-color: var(--bs-danger) !important;
+}
+
+.form-select.is-valid ~ .select2-container--bootstrap5 .select2-selection {
+    border-color: var(--bs-success) !important;
+}
+
+[dir=rtl] .select2-selection__clear {
+    left: 3rem !important;
+    right: auto !important
+}
+
+.select2-container--bootstrap5 .select2-dropdown .select2-results__option.select2-results__option--selected:after {
+    left: 1.25rem !important;
+    right: auto !important
+}
+/*
+[dir=rtl] .flatpickr-calendar.animate.open.arrowTop.arrowLeft {
+    left: auto !important;
+    right: 728.5px !important
+}*/
+
+[dir=rtl] input#holidaydate {
+    text-align: right !important
+}
+
+.was-validated .form-control:invalid, .form-control.is-invalid {
+    background-image: none !important
+}
+
+.was-validated .form-control:valid, .form-control.is-valid {
+    background-image: none !important
+}
+
+.swal2-popup.swal2-show {
+    height: 360px;
+}
+
+.eyeClass {
+    top: 20px !important;
+}
+
+
+.dataTables_scrollHeadInner {
+    width: auto !important;
+}

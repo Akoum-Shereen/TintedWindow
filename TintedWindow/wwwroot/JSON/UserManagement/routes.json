@@ -1,0 +1,142 @@
+﻿{
+  "routes": [
+
+    {
+      "computerName": "ServiceSchedule",
+      "link": "ServiceSchedule",
+      "displayName": "ServiceSchedule",
+      "icon": "<i class='fas fa-light fa-calendar-days'></i>"
+    },
+    {
+      "computerName": "AdvancedSettings",
+      "link": "GlobalConfig",
+      "displayName": "AdvancedSettings",
+      "icon": "<i class='fas fa-light fa-gears'></i>"
+
+    },
+    {
+      "computerName": "Holiday",
+      "link": "Holiday",
+      "displayName": "Holiday",
+      "icon": "<i class='fas fa-light fa-gears'></i>"
+    },
+    {
+      "computerName": "NonBusinessDay",
+      "link": "NonBusinessDay",
+      "displayName": "NonBusinessDay",
+      "icon": "<i class='fas fa-light fa-gears'></i>"
+    },
+    {
+      "computerName": "Category",
+      "link": "Category",
+      "displayName": "Category",
+      "icon": "<i class='fas fa-regular fa-layer-group'></i>"
+    },
+    {
+      "computerName": "Announcement",
+      "link": "Announcement",
+      "displayName": "Announcement",
+      "icon": "<i class='fas fa-regular fa-bullhorn'></i>"
+    },
+    {
+      "computerName": "Corporate",
+      "link": "Corporate",
+      "displayName": "ManageCorporates",
+      "icon": "<i class='fas fa-regular fa-store'></i>"
+    },
+    {
+      "computerName": "CorporateService",
+      "link": "CorporateService",
+      "displayName": "ManageCorporateServices",
+      "icon": "<i class='fas fa-regular fa-screwdriver-wrench'></i>"
+    },
+    {
+      "computerName": "CorporateGroup",
+      "link": "CorporateGroup",
+      "displayName": "CorporateGroup",
+      "icon": "<i class='fas fa-regular fa-screwdriver-wrench'></i>"
+    },
+    {
+      "computerName": "Service",
+      "link": "Service",
+      "displayName": "Service",
+      "icon": "<i class='fas fa-regular fa-screwdriver-wrench'></i>"
+
+    },
+    {
+      "computerName": "ServiceLink",
+      "link": "ServiceLink",
+      "displayName": "ServiceLink",
+      "icon": "<i class='fas fa-regular fa-screwdriver-wrench'></i>"
+    },
+    {
+      "computerName": "Counter",
+      "link": "Counter",
+      "displayName": "Counter",
+      "icon": "<i class='fas fa-regular fa-ticket'></i>"
+    },
+    {
+      "computerName": "Location",
+      "link": "Location",
+      "displayName": "Location",
+      "icon": "<i class='fas fa-regular fa-building'></i>"
+    },
+    {
+      "computerName": "ManageAppointments",
+      "link": "Appointment",
+      "displayName": "ManageAppointments",
+      "icon": "<i class='fas fa-light fa-calendar-days'></i>"
+    },
+    {
+      "computerName": "DailyAppointments",
+      "link": "AppointmentDaily",
+      "displayName": "DailyAppointments",
+      "icon": "<i class='fas fa-light fa-calendar-days'></i>"
+    },
+    {
+      "computerName": "DailyAppointmentsByNumber",
+      "link": "AppointmentDailyByNumber",
+      "displayName": "DailyAppointmentsByNumber",
+      "icon": "<i class='fas fa-light fa-calendar-days'></i>"
+    },
+    {
+      "computerName": "WebUsers",
+      "link": "WebUsers",
+      "displayName": "WebUsers",
+      "icon": "<i class='ki-outline ki-user-edit fs-2'></i>"
+    },
+    {
+      "computerName": "WebRoles",
+      "link": "WebRoles",
+      "displayName": "WebRoles",
+      "icon": "<i class='ki-outline ki-user-edit fs-2'></i>"
+    },
+    {
+      "computerName": "Configuration_EditProfile",
+      "link": "UserConfiguration/EditProfile"
+    },
+    {
+      "computerName": "Configuration_ChangePassword",
+      "link": "UserConfiguration/ChangePassword"
+    }
+    //,
+    //{
+    //  "computerName": "Configuration",
+    //  "link": "Configuration",
+    //  "displayName": "",
+    //  "icon": ""
+    //},
+    //{
+    //  "computerName": "Configuration_EditProfile",
+    //  "link": "Configuration/EditProfile",
+    //  "displayName": "",
+    //  "icon": ""
+    //},
+    //{
+    //  "computerName": "Configuration_ChangePassword",
+    //  "link": "Configuration/ChangePassword",
+    //  "displayName": "",
+    //  "icon": ""
+    //}
+  ]
+}

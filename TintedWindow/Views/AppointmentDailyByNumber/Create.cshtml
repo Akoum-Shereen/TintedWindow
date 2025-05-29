@@ -1,0 +1,281 @@
+﻿@{
+    var controllerName = HelperExtensions.GetRequiredString(Html.ViewContext.RouteData, "controller");
+
+    var userAction = ViewData["UserAction"]?.ToString();
+    var title = ViewData["Title"]?.ToString();
+
+
+    var s_list = (dynamic)ViewData["services"] == null ? new List<dynamic>() : (dynamic)ViewData["services"];
+    var c_list = (dynamic)ViewData["counters"] == null ? new List<dynamic>() : (dynamic)ViewData["counters"];
+    var m_list = (dynamic)ViewData["Months"] == null ? new List<dynamic>() : (dynamic)ViewData["Months"];
+    var y_list = (dynamic)ViewData["Years"] == null ? new List<dynamic>() : (dynamic)ViewData["Years"];
+    var labelTypes = (dynamic)ViewData["labelTypes"] == null ? new List<dynamic>() : (dynamic)ViewData["labelTypes"];
+    var servicerequirements_Lst = (dynamic)ViewData["servicerequirements"] == null ? new List<dynamic>() : (dynamic)ViewData["servicerequirements"];
+
+    var actionTitle = userAction == "edit"
+        ? string.Format("{0} {1}", Localizer["Edit"].Value, title ?? string.Empty)
+        : Localizer["AddNew"].Value;
+
+    var Info = (dynamic)ViewData["Info"];
+    string id = userAction == "edit" ? (string)ViewData["id"] : "";
+
+    var idservice = "";
+    var appointmentdate = "";
+    var phonenumber = "";
+    int counternumber = 0;
+    var servicerequirements = new List<dynamic>();
+
+    if (userAction == "edit" && Info != null)
+    {
+        idservice = Info.idservice;
+        appointmentdate = Info.appointmentdate;
+        phonenumber = Info.phonenumber;
+        counternumber = Info.cnumber;
+        servicerequirements = Info.servicerequirements != null ? new List<dynamic>(Info.servicerequirements) : new List<dynamic>();
+    }
+}
+
+@section PageStyles{
+<style>
+    div#htmlcontent {
+        border: 1px solid var(--bs-gray-300);
+        height: auto !important;
+    }
+
+    .ql-toolbar.ql-snow {
+        border: 1px solid var(--bs-gray-300) !important;
+    }
+
+</style>
+}
+<a href="@(Url.Content("~/"+controllerName))" class="back-btn" style="display:none;"></a>
+
+<div class="d-flex flex-column flex-column-fluid">
+    <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 ">
+        <!--begin::Toolbar-->
+        <!--begin::Toolbar container-->
+        <div id="kt_app_toolbar_container" class="app-container d-flex flex-stack ">
+            <!--begin::Page title-->
+            <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
+                <!--begin::Title-->
+                <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+                    @ViewData["Title"]
+                </h1>
+                <!--end::Title-->
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-muted">
+                        <a href="@(Url.Content("~/"+controllerName))" class="text-muted text-hover-primary">
+                            @ViewData["Title"]
+                        </a>
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item">
+                        <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-muted">
+                        @actionTitle
+                    </li>
+                    <!--end::Item-->
+
+                </ul>
+                <!--end::Breadcrumb-->
+            </div>
+            <!--end::Page title-->
+        </div>
+        <!--end::Toolbar container-->
+    </div>
+    <!--end::Toolbar-->
+    <!--begin::Content container-->
+    <div id="kt_app_content" class="app-content  flex-column-fluid ">
+        <div id="kt_app_content_container" class="app-container">
+            <!--begin::Contacts App- Add New Contact-->
+            <div class="row g-7">
+                <!--begin::Content-->
+                <!--begin::Contacts-->
+                <div class="card card-flush h-lg-100" id="kt_users_main">
+                    <!--begin::Card body-->
+                    <div class="card-body">
+                        <!--begin::Form-->
+                        <form id="kt_modal_AppointmentDailyByNumber_form" class="form">
+                            <!--begin::Scroll-->
+
+                            <div class="col-12 fv-row mb-9">
+                                <label class="input_label mb-2 m-1 required">@Localizer["Service"]</label>
+                                <select class="form-select form-select-md" data-control="select2" name="idservice" id="idservice" onchange="GetServiceRequirementsData()">
+                                    <option value="">@Localizer["Service"]</option>
+                                    @foreach (var item in new List<dynamic>(s_list))
+                                    {
+                                        if (item.idservice == idservice)
+                                        {
+                                            <option selected value="@Html.Raw(item.idservice)">@Html.Raw(item.title)</option>
+
+                                        }
+                                        else
+                                        {
+                                            <option value="@Html.Raw(item.idservice)">@Html.Raw(item.title)</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 fv-row mb-9">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-semibold mb-2 required">@Localizer["Date"]</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input class="form-control " name="appointmentdate" placeholder="@Localizer["Date"]" id="appointmentdate" value="@appointmentdate" />
+                                    <!--end::Input-->
+                                </div>
+                                <div class="col-sm-12 col-md-6 fv-row mb-9">
+                                    <!--begin::Label-->
+                                    <label class="fs-6 fw-semibold mb-2 required">@Localizer["Counter"]</label>
+                                    <!--end::Label-->
+                                    <select class="form-select form-select-md" data-control="select2" name="cnumber" id="cnumber">
+                                        <option value="">@Localizer["Counter"]</option>
+                                        @foreach (var item in new List<dynamic>(c_list))
+                                        {
+                                            if (item.counternumber == counternumber)
+                                            {
+                                                <option selected value="@Html.Raw(item.counternumber)">@Html.Raw(item.title)</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@Html.Raw(item.counternumber)">@Html.Raw(item.title)</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <div class="fv-row mb-9">
+                                <!--begin::Label-->
+                                <label class="fs-6 fw-semibold mb-2 required">@Localizer["Phonenumber"]</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="text" class="form-control NumbersOnly" maxlength=20 placeholder="@Localizer["Phonenumber"]" name="phonenumberI" id="phonenumberI" value="@phonenumber" />
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Input group-->
+                            <!--begin::Input group-->
+                            <!--end::Input group-->
+                            <div class="mb-5 fv-row">
+                                <!--begin::Repeater-->
+                                <div id="kt_docs_repeater_advanced">
+                                    <!--begin::Form group-->
+                                    <div class="form-group">
+                                        <div data-repeater-list="kt_docs_repeater_advanced">
+                                            @if (servicerequirements.Count() > 0)
+                                            {
+                                                foreach (var serviceReq in servicerequirements)
+                                                {
+                                                    var label = serviceReq.labelvalue;
+                                                    var servicerequirements_id = (string)serviceReq.id;
+
+                                                    <div data-repeater-item>
+                                                        <div class="form-group row mb-5">
+
+                                                            <div class="col-sm-12 col-md-5 fv-row">
+                                                                <label class="required form-label">@Localizer["ServiceRequirement"]</label>
+                                                                <select class="form-select" data-kt-repeater="select2" name="labeltype" id="labeltype">
+                                                                    <option value="">@Localizer["ServiceRequirement"]</option>
+                                                                    @foreach (var item in servicerequirements_Lst)
+                                                                    {
+                                                                        if (item.idservicerequirement == servicerequirements_id)
+                                                                        {
+                                                                            <option value="@Html.Raw(item.idservicerequirement)" data-type="@item.labeltype" selected>@Html.Raw(item.label)</option>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <option value="@Html.Raw(item.idservicerequirement)" data-type="@item.labeltype">@Html.Raw(item.label)</option>
+                                                                        }
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-5 fv-row">
+                                                                <label class="required form-label">@Localizer["Value"]</label>
+                                                                <input type="text" class="form-control mb-2 mb-md-0" placeholder="@Localizer[" Value"]" id="labelV" name="labelV"
+                                                               style="direction:rtl" value="@label" />
+                                                            </div>
+
+                                                            <div class="col-md-2 fv-row ">
+                                                                <a href="javascript:;" data-repeater-delete class="btn btn-flex btn-sm btn-light-danger mt-3 mt-md-9">
+                                                                    <i class="ki-outline ki-trash fs-2"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <!--end::Form group-->
+                                    <!--begin::Form group-->
+                                    <div class="form-group mt-2 mb-5 @(servicerequirements.Count() > 0 ? "" : "d-none")" id="repeaterAction">
+                                        <a href="javascript:;" data-repeater-create class="btn btn-flex btn-light-primary">
+                                            <i class="ki-duotone ki-plus fs-3"></i>
+                                            @Localizer["Add"]
+                                        </a>
+                                    </div>
+                                    <!--end::Form group-->
+                                </div>
+                                <!--end::Repeater-->
+                            </div>
+                            <!--end::Scroll-->
+
+                            <div class="separator mb-6"></div>
+                            <!--end::Separator-->
+                            <!--begin::Action buttons-->
+                            <div class="d-flex justify-content-end">
+                                <!--begin::Button-->
+                                <button type="reset"
+                                        onclick="window.location.href='@Url.Content("~/"+controllerName)'"
+                                        id="kt_modal_cancel" class="btn btn-light me-3">
+                                    @Localizer["Discard"]
+                                </button>                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" class="btn btn-primary" data-kt-AppointmentDailyByNumber-modal-action="submit">
+                                    <span class="indicator-label">@Localizer["Submit"]</span>
+                                    <span class="indicator-progress">
+                                        @Localizer["PleaseWait..."]
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Action buttons-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                    <!--end::Card body-->
+                </div>
+                <!--end::Contacts-->
+            </div>
+            <!--end::Content-->
+            <!--end::Contacts App- Add New Contact-->
+        </div>
+        <!--end::Content container-->
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
+@Html.Hidden("routUrl", Url.Content("~/"))
+@Html.Hidden("idads", @id)
+@Html.Hidden("actionName", @userAction)
+@Html.Hidden("idAppointmentDailyByNumber", @id)
+
+@section Scripts {
+<environment>
+    <script src="~/assets/plugins/custom/formrepeater/formrepeater.bundle.js"></script>
+
+    <script src="~/js/AppointmentDailyByNumber/create.js" type="text/javascript" asp-append-version="true"></script>
+
+</environment>
+}

@@ -1,0 +1,476 @@
+﻿@using Newtonsoft.Json.Linq
+@{
+    var controllerName = HelperExtensions.GetRequiredString(Html.ViewContext.RouteData, "controller");
+
+    var cat_list = (dynamic)ViewData["categories"] == null ? new List<dynamic>() : (dynamic)ViewData["categories"];
+    var l_list = (dynamic)ViewData["locations"] == null ? new List<dynamic>() : (dynamic)ViewData["locations"];
+    var c_list = (dynamic)ViewData["counters"] == null ? new List<dynamic>() : (dynamic)ViewData["counters"];
+
+    var servicerequirements = new List<dynamic>();
+    if (ViewData["fixedServiceRequirmenet"] != null)
+    {
+        if (ViewData["fixedServiceRequirmenet"] is JArray jArray)
+        {
+            servicerequirements = jArray.ToObject<List<dynamic>>();
+        }
+        else if (ViewData["fixedServiceRequirmenet"] is List<dynamic> existingList)
+        {
+            servicerequirements = existingList;
+        }
+        else
+        {
+            throw new InvalidOperationException("Unexpected type for fixedServiceRequirmenet");
+        }
+    }
+
+    var userAction = ViewData["UserAction"]?.ToString();
+    var title = ViewData["Title"]?.ToString();
+
+    var actionTitle = userAction == "edit"
+        ? string.Format("{0} {1}", Localizer["Edit"].Value, title ?? string.Empty)
+        : Localizer["AddNew"].Value;
+
+    var Info = (dynamic)ViewData["Info"];
+    string id = userAction == "edit" ? (string)ViewData["id"] : "";
+
+    var daysOfWeek = (dynamic)ViewData["daysOfWeek"] == null ? new List<dynamic>() : (dynamic)ViewData["daysOfWeek"];
+    var labelTypes = (dynamic)ViewData["labelTypes"] == null ? new List<dynamic>() : (dynamic)ViewData["labelTypes"];
+
+    var titleService = "";
+    var idcategory = "";
+    var idservice = "";
+    var idlocation = "";
+    var workingdays = new List<int>();
+    var appointmentsperworkingday = new List<dynamic>();
+    var counters = new List<dynamic>();
+    var maxappointments = "";
+    var neededdocs = "";
+
+    if (userAction == "edit" && Info != null)
+    {
+        titleService = Info.title;
+        idservice = Info.idservice;
+        idcategory = Info.idcategory;
+        idlocation = Info.idlocation;
+        servicerequirements = Info.servicerequirements != null ? new List<dynamic>(Info.servicerequirements) : new List<dynamic>();
+        appointmentsperworkingday = Info.appointmentsperworkingday != null ? new List<dynamic>(Info.appointmentsperworkingday) : new List<dynamic>();
+        counters = Info.counters != null ? new List<dynamic>(Info.counters) : new List<dynamic>();
+        neededdocs = Info.neededdocs;
+    }
+}
+
+@section PageStyles{
+<style>
+    div#htmlcontent {
+        border: 1px solid var(--bs-gray-300);
+        height: auto !important;
+    }
+
+    .ql-toolbar.ql-snow {
+        border: 1px solid var(--bs-gray-300) !important;
+    }
+
+</style>
+}
+<a href="@(Url.Content("~/"+controllerName))" class="back-btn" style="display:none;"></a>
+
+<div class="d-flex flex-column flex-column-fluid">
+    <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 ">
+        <!--begin::Toolbar-->
+        <!--begin::Toolbar container-->
+        <div id="kt_app_toolbar_container" class="app-container d-flex flex-stack ">
+            <!--begin::Page title-->
+            <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
+                <!--begin::Title-->
+                <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+                    @ViewData["Title"]
+                </h1>
+                <!--end::Title-->
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-muted">
+                        <a href="@(Url.Content("~/"+controllerName))" class="text-muted text-hover-primary">
+                            @ViewData["Title"]
+                        </a>
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item">
+                        <span class="bullet bg-gray-400 w-5px h-2px"></span>
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-muted">
+                        @actionTitle
+                    </li>
+                    <!--end::Item-->
+
+                </ul>
+                <!--end::Breadcrumb-->
+            </div>
+            <!--end::Page title-->
+        </div>
+        <!--end::Toolbar container-->
+    </div>
+    <!--end::Toolbar-->
+    <!--begin::Content container-->
+    <div id="kt_app_content" class="app-content  flex-column-fluid ">
+        <div id="kt_app_content_container" class="app-container">
+            <!--begin::Contacts App- Add New Contact-->
+            <div class="row g-7">
+                <!--begin::Content-->
+                <!--begin::Contacts-->
+                <div class="card card-flush h-lg-100" id="kt_users_main">
+                    <!--begin::Card body-->
+                    <div class="card-body">
+                        <!--begin::Form-->
+                        <form id="kt_user_form" class="form" autocomplete="off">
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 mb-5 fv-row">
+                                    <label class="required input-label mb-2">@Localizer["Name"]</label>
+                                    <input id="title" name="title" maxlength=200 class="form-control" type="text" placeholder="@Localizer["Name"]" value="@Html.Raw(@titleService)">
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 mb-5 fv-row">
+                                    <label class="required input_label mb-2">@Localizer["Category"]</label>
+                                    <select class="form-select form-select-md" data-control="select2" name="idcategory" id="idcategory" data-allow-clear="true" data-placeholder="@Localizer["Category"]">
+                                        <option value="">@Localizer["Category"]</option>
+                                        @foreach (var item in cat_list)
+                                        {
+                                            if (idcategory == (string)item.idcategory)
+                                            {
+                                                <option selected value="@Html.Raw(item.idcategory)">@Html.Raw(item.title)</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@Html.Raw(item.idcategory)">@Html.Raw(item.title)</option>
+
+                                            }
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 mb-5 fv-row">
+                                    <label class="required input_label mb-2">@Localizer["BuildingNumber"]</label>
+                                    <select class="form-select form-select-md" data-control="select2" name="idlocation" id="idlocation" data-allow-clear="true" data-placeholder="@Localizer["Location"]">
+                                        <option value="">@Localizer["BuildingNumber"]</option>
+                                        @foreach (var item in l_list)
+                                        {
+                                            if (idlocation == (string)item.idlocation)
+                                            {
+                                                <option selected value="@Html.Raw(item.idlocation)">@Html.Raw(item.title)</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@Html.Raw(item.idlocation)">@Html.Raw(item.title)</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 mb-5 fv-row">
+                                    <label class="required input_label mb-2">@Localizer["Counters"]</label>
+                                    <select class="form-select form-select-md" data-control="select2" name="counters" id="counters" data-allow-clear="true" data-placeholder="@Localizer["Counters"]" multiple data-allow-clear="true">
+                                        <option value="">@Localizer["Counters"]</option>
+                                        @foreach (var item in c_list)
+                                        {
+                                            var isSelected = counters.Any(sr => sr == item.counternumber);
+                                            <option selected="@isSelected" value="@Html.Raw(item.counternumber)">@Html.Raw(item.title)</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-md-6  mb-5 fv-row">
+                                    <label for="neededdocs" class="required input-label mb-2">@Localizer["Neededdocs"]</label>
+                                    <div data-bs-theme="light">
+                                        @if (neededdocs == "")
+                                        {
+                                            <textarea name="neededdocs" id="neededdocs">
+                                                                                        </textarea>
+                                        }
+                                        else
+                                        {
+                                            <textarea name="neededdocs" id="neededdocs">
+                                                @Html.Raw(neededdocs)
+                                                                                    </textarea>
+                                        }
+                                    </div>
+                                </div>
+
+                                @*  <div class="col-sm-12 col-md-6 mb-5 fv-row">
+                                    <label class="required input-label mb-2">@Localizer["Maxappointments"]</label>
+                                    <input id="maxappointments" name="maxappointments" min=1 max=999 style="direction:rtl" class="form-control" type="number" placeholder="@Localizer["Maxappointments"]" value="@Html.Raw(@maxappointments)">
+                                    </div>
+
+                                    <div class="form-group col-sm-12 col-md-6 mb-5 fv-row">
+                                    <div class="col-12">
+                                    <label class="required input_label mb-2">@Localizer["Workingdays"]</label>
+                                    @{
+                                    var workingDaysStr = Json.Serialize(workingdays);
+                                    }
+                                    <input id="dayOfWeek" name="dayOfWeek" class="form-control d-none" value="@workingDaysStr">
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                    @foreach (var day in daysOfWeek)
+                                    {
+                                    <button id="@day.Key" class="btn-radio btn-fixed-width btn @(workingdays.Contains(day.Key) ? "btn-primary" : "btn-secondary")">
+                                    @day.Value
+                                    </button>
+                                    }
+                                    </div>
+
+                                    </div>
+                                    </div>*@
+
+                                <div class="col-sm-12 col-md-6 mb-5 fv-row">
+                                    <!--begin::Repeater-->
+                                    <div id="kt_docs_repeater_advanced">
+                                        <!--begin::Form group-->
+                                        <div class="form-group">
+                                            <div data-repeater-list="kt_docs_repeater_advanced">
+                                                @if (servicerequirements.Count() > 0)
+                                                {
+                                                    foreach (var serviceReq in servicerequirements)
+                                                    {
+                                                        var label = serviceReq.label;
+                                                        var labeltypeId = (int)serviceReq.labeltype;
+                                                        var isReadOnly = (bool?)serviceReq?.isreadonly;
+                                                        var isReadOnlyValue = (isReadOnly ?? false).ToString();
+
+                                                        <div data-repeater-item>
+                                                            <div class="form-group row mb-5">
+                                                                <div class="col-sm-12 col-md-5 fv-row ">
+                                                                    <label class="required form-label">Label</label>
+                                                                    <input type="text" data-kt-repeater2="input" class="form-control mb-2 mb-md-0" placeholder="Enter label" id="label" name="label" value="@label" disabled="@isReadOnly">
+                                                                </div>
+
+                                                                <div class="col-sm-12 col-md-5 fv-row d-none">
+                                                                    <input type="text" data-kt-repeater2="input1" class="form-control mb-2 mb-md-0" placeholder="isReadOnly" id="isReadOnly" name="isReadOnly" value="@isReadOnlyValue">
+                                                                </div>
+
+                                                                <div class="col-sm-12 col-md-5 fv-row">
+                                                                    <label class="required form-label">Label Type</label>
+                                                                    <select class="form-select" data-kt-repeater2="select2" name="labeltype" id="labeltype" disabled="@isReadOnly">
+                                                                        <option value="">Select Label Type</option>
+                                                                        @foreach (var item in labelTypes)
+                                                                        {
+                                                                            if (item.Key == labeltypeId)
+                                                                            {
+                                                                                <option value="@Html.Raw(item.Key)" selected>@Html.Raw(item.Value)</option>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <option value="@Html.Raw(item.Key)">@Html.Raw(item.Value)</option>
+                                                                            }
+                                                                        }
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="col-md-2 fv-row @(isReadOnly ?? false ? "d-none" : "")" data-kt-repeater2="deleteBtn">
+                                                                    <a href="javascript:;" data-repeater-delete class="btn btn-flex btn-sm btn-light-danger mt-3 mt-md-9">
+                                                                        <i class="ki-outline ki-trash fs-2"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <div data-repeater-item>
+                                                        <div class="form-group row mb-5">
+                                                            <div class="col-sm-12 col-md-5 fv-row ">
+                                                                <label class="required form-label">Label</label>
+                                                                <input type="text" class="form-control mb-2 mb-md-0" placeholder="Enter label" id="label" name="label" />
+                                                            </div>
+
+                                                            <div class="col-sm-12 col-md-5 fv-row">
+                                                                <label class="required form-label">Label Type</label>
+                                                                <select class="form-select" data-kt-repeater2="select2" name="labeltype" id="labeltype">
+                                                                    <option value="">Select Label Type</option>
+                                                                    @foreach (var item in labelTypes)
+                                                                    {
+                                                                        <option value="@Html.Raw(item.Key)">@Html.Raw(item.Value)</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+
+
+                                                            <div class="col-md-2 fv-row ">
+                                                                <a href="javascript:;" data-repeater-delete class="btn btn-flex btn-sm btn-light-danger mt-3 mt-md-9">
+                                                                    <i class="ki-outline ki-trash fs-2"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                        <!--end::Form group-->
+                                        <!--begin::Form group-->
+                                        <div class="form-group">
+                                            <a href="javascript:;" data-repeater-create class="btn btn-flex btn-light-primary">
+                                                @Localizer["Add"]
+                                            </a>
+                                        </div>
+                                        <!--end::Form group-->
+                                    </div>
+                                    <!--end::Repeater-->
+                                </div>
+
+                                <!--begin::Repeater-->
+                                <div id="kt_docs_repeater_advanced_daysOfWeek">
+                                    <!--begin::Form group-->
+                                    <div class="form-group">
+                                        <div data-repeater-list="kt_docs_repeater_advanced_daysOfWeek">
+                                            @if (appointmentsperworkingday.Count() > 0)
+                                            {
+                                                foreach (var appointment in appointmentsperworkingday)
+                                                {
+                                                    var day = (int)appointment.day;
+                                                    var maxappointmentperday = (int)appointment.maxappointmentperday;
+                                                    var maxcorporateappointmentperday = (int)appointment.maxcorporateappointmentperday;
+
+                                                    <div data-repeater-item>
+                                                        <div class="form-group row mb-5">
+                                                            <div class="col-md-3 fv-row">
+                                                                <label class="required form-label">@Localizer["Workingdays"]</label>
+                                                                <select name="workingDayId" class="form-select" data-kt-repeater="select2" data-placeholder="@Localizer["Workingdays"]">
+                                                                    <option value="">@Localizer["Workingdays"]</option>
+                                                                    @foreach (var item in daysOfWeek)
+                                                                    {
+                                                                        if (item.Key == day)
+                                                                        {
+                                                                            <option selected value="@Html.Raw(item.Key)">@Html.Raw(item.Value)</option>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <option value="@Html.Raw(item.Key)">@Html.Raw(item.Value)</option>
+                                                                        }
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-sm-12 col-md-3 fv-row ">
+                                                                <label class="required form-label">
+                                                                    @Localizer["Maxappointmentperday"]
+                                                                </label>
+                                                                <input type="text" class="form-control mb-2 mb-md-0 NumbersOnly" placeholder="@Localizer["Maxappointmentperday"]" id="maxappointmentperday" name="maxappointmentperday" value="@maxappointmentperday" />
+                                                            </div>
+
+                                                            <div class="col-sm-12 col-md-3 fv-row ">
+                                                                <label class="required form-label">@Localizer["Maxcorporateappointmentperday"]</label>
+                                                                <input type="text" class="form-control mb-2 mb-md-0 NumbersOnly" placeholder="@Localizer["Maxcorporateappointmentperday"]" id="maxcorporateappointmentperday" name="maxcorporateappointmentperday" value="@maxcorporateappointmentperday" />
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <a href="javascript:;" data-repeater-delete class="btn btn-flex btn-sm btn-light-danger mt-3 mt-md-9">
+                                                                    <i class="ki-outline ki-trash fs-2"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <div data-repeater-item>
+                                                    <div class="form-group row mb-5">
+                                                        <div class="col-md-3 fv-row">
+                                                            <label class="required form-label">@Localizer["Workingdays"]</label>
+                                                            <select name="workingDayId" class="form-select" data-kt-repeater="select2" data-placeholder="@Localizer["Workingdays"]">
+                                                                <option value="">@Localizer["Workingdays"]</option>
+                                                                @foreach (var item in daysOfWeek)
+                                                                {
+                                                                    <option value="@Html.Raw(item.Key)">@Html.Raw(item.Value)</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm-12 col-md-3 fv-row ">
+                                                            <label class="required form-label">
+                                                                @Localizer["Maxappointmentperday"]
+                                                            </label>
+                                                            <input type="text" class="form-control mb-2 mb-md-0 NumbersOnly" placeholder="@Localizer["Maxappointmentperday"]" id="maxappointmentperday" name="maxappointmentperday" />
+                                                        </div>
+
+                                                        <div class="col-sm-12 col-md-3 fv-row ">
+                                                            <label class="required form-label">@Localizer["Maxcorporateappointmentperday"]</label>
+                                                            <input type="text" class="form-control mb-2 mb-md-0 NumbersOnly" placeholder="@Localizer["Maxcorporateappointmentperday"]" id="maxcorporateappointmentperday" name="maxcorporateappointmentperday" />
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <a href="javascript:;" data-repeater-delete class="btn btn-flex btn-sm btn-light-danger mt-3 mt-md-9">
+                                                                <i class="ki-outline ki-trash fs-2"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <!--end::Form group-->
+                                    <!--begin::Form group-->
+                                    <div class="form-group">
+                                        <a href="javascript:;" data-repeater-create class="btn btn-flex btn-light-primary">
+                                            @Localizer["Add"]
+                                        </a>
+                                    </div>
+                                    <!--end::Form group-->
+                                </div>
+                                <!--end::Repeater-->
+
+
+                            </div>
+
+                            <div class="separator mb-6"></div>
+                            <!--end::Separator-->
+                            <!--begin::Action buttons-->
+                            <div class="d-flex justify-content-end">
+                                <!--begin::Button-->
+                                <button type="reset"
+                                        onclick="window.location.href='@Url.Content("~/"+controllerName)'"
+                                        id="kt_modal_cancel" class="btn btn-light me-3">
+                                    @Localizer["Discard"]
+                                </button>
+                                <!--end::Button-->
+                                <!--begin::Button-->
+                                <button type="submit" id="kt_user_modal_submit" class="btn btn-primary">
+                                    <span class="indicator-label">@Localizer["Submit"]</span>
+                                    <span class="indicator-progress">
+                                        @Localizer["PleaseWait..."]
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                                <!--end::Button-->
+                            </div>
+                            <!--end::Action buttons-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                    <!--end::Card body-->
+                </div>
+                <!--end::Contacts-->
+            </div>
+            <!--end::Content-->
+            <!--end::Contacts App- Add New Contact-->
+        </div>
+        <!--end::Content container-->
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
+@Html.Hidden("routUrl", Url.Content("~/"))
+@Html.Hidden("idservice", @id)
+@Html.Hidden("actionName", @userAction)
+
+@section Scripts {
+<script>
+
+</script>
+
+<environment>
+    <script src="~/assets/plugins/custom/formrepeater/formrepeater.bundle.js"></script>
+
+    <script src="~/assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js"></script>
+    <script src="~/js/Service/create.js" type="text/javascript" asp-append-version="true"></script>
+</environment>
+}

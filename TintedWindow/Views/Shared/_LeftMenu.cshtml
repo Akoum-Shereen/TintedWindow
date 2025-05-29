@@ -1,0 +1,133 @@
+﻿﻿@using TintedWindow.Extensions
+@using TintedWindow.Models.Requests
+@using Newtonsoft.Json
+@using System.Security.Claims
+
+@{
+    var controllerName = HelperExtensions.GetRequiredString(Html.ViewContext.RouteData, "controller").ToLower();
+    var actionName = HelperExtensions.GetRequiredString(Html.ViewContext.RouteData, "action").ToLower();
+    var projectTitle = Configuration.GetSection("MyConfiguration")["ProjectTitle"];
+
+    var sessionName = "maindata_" + User.FindFirstValue("Username");
+    var sectionsString = Accessor.HttpContext.Session.GetString(sessionName);
+    var ListSections = !string.IsNullOrEmpty(sectionsString) ? JsonConvert.DeserializeObject<List<Section>>(sectionsString) : new List<Section>();
+
+    var sessionRouteName = "routedata";
+    var routeSectionsString = Accessor.HttpContext.Session.GetString(sessionRouteName);
+    var ListRoutes = !string.IsNullOrEmpty(routeSectionsString) ? JsonConvert.DeserializeObject<List<RouteObj>>(routeSectionsString) : new List<RouteObj>();
+}
+
+<div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar" data-kt-drawer-activate="{default: true, lg: false}"
+     data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
+
+    <!-- Logo -->
+    <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
+        <a href="@Url.Action("Login", "Account")">
+            @*<img alt="Logo" src="~/assets/media/top-logo-dark.png" class="h-25px app-sidebar-logo-default" />*@
+            @*<img alt="Logo" src="~/favicon.ico" class="h-20px app-sidebar-logo-minimize" />*@
+        </a>
+        <div id="kt_app_sidebar_toggle" class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary body-bg h-30px w-30px
+                                               position-absolute top-50 start-100 translate-middle rotate"
+             data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="app-sidebar-minimize">
+            <i class="ki-duotone ki-double-left fs-2 rotate-180">
+                <span class="path1"></span>
+                <span class="path2"></span>
+            </i>
+        </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <div class="app-sidebar-menu overflow-hidden flex-column-fluid">
+        <div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper hover-scroll-overlay-y my-5" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto"
+             data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu"
+             data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
+
+            <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
+
+                @functions {
+                    private void RenderSection(Section pSection, List<Section> sections, List<RouteObj> routes, string controllerName)
+                    {
+                        var matchingRoute = routes.FirstOrDefault(route => route.computerName.Trim().ToLower() == pSection.computerName.Trim().ToLower());
+
+                        var pIcon = matchingRoute != null ? matchingRoute.icon : "<i class='fas fa-folder'></i>";
+                        var ListChildSections = sections.Where(s => s.parentId == pSection.id && s.actions.Select(a => a.ToLower()).Contains("view")).ToList();
+                        var sectionName = pSection.name.Trim().Replace(" ", "");
+
+                        var firstChildSection = ListChildSections.FirstOrDefault(x => x.parentId == pSection.id);
+                        var firstChildRoute = routes.FirstOrDefault(route => route.computerName.Trim().ToLower() == firstChildSection.computerName.Trim().ToLower());
+                        pIcon = firstChildRoute != null ? firstChildRoute.icon : "<i class='fas fa-folder'></i>";
+                        
+                        @if (ListChildSections.Any())
+                        {
+                            <div data-kt-menu-trigger="click" class="menu-item menu-accordion @(ListChildSections.Any(child => controllerName == child.computerName.Trim().ToLower()) ? "here show" : "")">
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        @Html.Raw(pIcon)
+                                    </span>
+                                    <span class="menu-title">@Localizer[sectionName]</span><span class="menu-arrow"></span>
+                                </span>
+
+
+                                <div class="menu-sub menu-sub-accordion @(ListChildSections.Any(child => controllerName == child.computerName.Trim().ToLower()) ? "show" : "")" kt-hidden-height="128" style="@(ListChildSections.Any(child => controllerName == child.computerName.Trim().ToLower()) ? "" : "display: none; overflow: hidden;")">
+                                    @foreach (var childSection in ListChildSections.OrderBy(x => x.computerName))
+                                    {
+                                        @if (sections.Any(s => s.parentId == childSection.id && s.actions.Select(a => a.ToLower()).Contains("view")))
+                                        {
+                                            RenderSection(childSection, sections, routes, controllerName);
+                                        }
+                                        else
+                                        {
+                                            var matchingRouteSub = routes.FirstOrDefault(route => route.computerName.Trim().ToLower() == childSection.computerName.Trim().ToLower());
+
+                                            if (matchingRouteSub != null)
+                                            {
+                                                var matchingRouteSubName = matchingRouteSub.displayName.Trim().Replace(" ", "");
+
+                                                <div class="menu-item">
+                                                    <a class="menu-link @(controllerName == matchingRouteSub.computerName.Trim().ToLower() ? "active" : "")" href="@Url.Content("~/" + matchingRouteSub?.link)">
+                                                        <span class="menu-bullet">
+                                                            <span class="bullet bullet-dot"></span>
+                                                        </span>
+                                                        <span class="menu-title">@Localizer[matchingRouteSubName]</span>
+                                                    </a>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                </div>
+
+                            </div>
+                        }
+                    }
+                }
+
+                @foreach (var pSection in ListSections.Where(x => x.parentId == null && x.actions.Select(a => a.ToLower()).Contains("view")))
+                {
+                    @if (ListSections.Any(s => s.parentId == pSection.id && s.actions.Select(a => a.ToLower()).Contains("view")))
+                    {
+                        RenderSection(pSection, ListSections, ListRoutes, controllerName);
+                    }
+                    else
+                    {
+                        var matchingRoute = ListRoutes.FirstOrDefault(route => route.computerName.Trim().ToLower() == pSection.computerName.Trim().ToLower());
+                        var pIcon = matchingRoute != null ? matchingRoute.icon : "<i class='fas fa-folder'></i>";
+
+                        if (matchingRoute != null)
+                        {
+                            var matchingRouteName = matchingRoute.displayName.Trim().Replace(" ", "");
+
+                            <div class="menu-item">
+                                <a class="menu-link @(controllerName == matchingRoute.computerName.Trim().ToLower() ? "active" : "")" href="@Url.Content("~/" + matchingRoute?.link)">
+                                    <span class="menu-icon">
+                                        @Html.Raw(pIcon)
+                                    </span>
+                                    <span class="menu-title">@Localizer[matchingRouteName]</span>
+                                </a>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

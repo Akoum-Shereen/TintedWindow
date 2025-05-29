@@ -1,0 +1,131 @@
+﻿@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+
+@model LoginReq
+
+@{
+    var isStaticLogin = ViewData["isStaticLogin"];
+    var loginImg = ViewData["loginImg"];
+    var siteKey = ViewData["siteKey"];
+    var isActiveCAPTCHA = ViewData["isActiveCAPTCHA"];
+}
+
+<!--begin::Page bg image-->
+<style>
+    #login-page {
+        background-image: url(@(Url.Content("~/assets/media/auth/") + loginImg));
+        background-position: center;
+        background-size: cover;
+    }
+
+    [data-bs-theme="dark"] #login-page {
+        background-image: url('/assets/media/auth/bg4-dark.jpg');
+    }
+</style>
+
+<!--end::Page bg image-->
+<!--begin::Authentication - Sign-in -->
+<div class="d-flex flex-column flex-column-fluid flex-lg-row" id="login-page">
+    <!--begin::Body-->
+    <div class="d-flex flex-column-fluid justify-content-center justify-content-lg-end p-12 p-lg-20">
+        <!--begin::Card-->
+        <div class="bg-body d-flex flex-column align-items-stretch flex-center rounded-4 w-md-600px p-20" id="webApp-LoginPage">
+            <div class="blur-filter"></div>
+            <!--begin::Wrapper-->
+            <div class="d-flex flex-center flex-column flex-column-fluid px-lg-10 pb-15 pb-lg-20" id="viewContainer">
+                <!--begin::Form-->
+                <form class="form w-100" id="kt_sign_in_form" sp-route-returnurl="@ViewData["ReturnUrl"]" method="post" autocomplete="off">
+                    <!--begin::Heading-->
+                    <div class="text-center mb-11">
+                        <!--begin::Title-->
+                        <h1 class="text-dark fw-bolder mb-3">@Localizer["SignIn"]</h1>
+                        <!--end::Title-->
+                    </div>
+                    <!--begin::Heading-->
+                    <!--begin::Input group=-->
+                    <div class="fv-row mb-8">
+                        <!--begin::Email-->
+                        <input type="text" placeholder=@Localizer["Username"] autocomplete="off" class="form-control" asp-for="username" />
+                        <!--end::Email-->
+                    </div>
+                    <!--end::Input group=-->
+                    @*<div class="fv-row mb-3">*@
+                    <!--begin::Password-->
+                    @*<input type="password" placeholder="Password" autocomplete="off" class="form-control" asp-for="password" />*@
+                    <!--end::Password-->
+                    <!--begin::Main wrapper-->
+                    <div class="mb-3 fv-row" data-kt-password-meter="true">
+                        <div class="position-relative mb-3 col-lg-12">
+                            <input type="password" placeholder=@Localizer["Password"] autocomplete="off" class="form-control" asp-for="password" />
+                            <!--begin::Visibility toggle-->
+                            <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
+                                <i class="ki-duotone ki-eye-slash fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
+                                <i class="ki-duotone ki-eye d-none fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                            </span>
+                            <!--end::Visibility toggle-->
+                        </div>
+                    </div>
+                    <!--end::Main wrapper-->
+                    @*</div>*@
+                    <!--end::Input group=-->
+                    <!--begin::Wrapper-->
+                   @* <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
+                        <div></div>
+                        <!--begin::Link-->
+                        <a onclick=handleForgetPasswordModel() id="kt_sign_in_forgot_password" class="link-primary text-dark">Forgot Password ?</a>
+                        <!--end::Link-->
+                    </div>*@
+                    <!--end::Wrapper-->
+                    <!--begin::Submit button-->
+                    <div class="d-grid mb-10 mt-10">
+                        <button type="submit" id="kt_sign_in_submit" class="btn btn-primary" disabled>
+                            <!--begin::Indicator label-->
+                            <span class="indicator-label">@Localizer["SignIn"]</span>
+                            <!--end::Indicator label-->
+                            <!--begin::Indicator progress-->
+                            <span class="indicator-progress">
+                                @Localizer["PleaseWait..."]
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                            <!--end::Indicator progress-->
+                        </button>
+                    </div>
+                    <!--end::Submit button-->
+                    <!--begin::Sign up-->
+                    @*    <div class="text-gray-500 text-center fw-semibold fs-6">
+                        Not a Member yet?
+                        <a href="../../demo1/dist/authentication/layouts/creative/sign-up.html" class="link-primary">Sign up</a>
+                        </div>*@
+                    <!--end::Sign up-->
+                </form>
+                <!--end::Form-->
+            </div>
+            <!--end::Wrapper-->
+
+        </div>
+        <!--end::Card-->
+    </div>
+    <!--end::Body-->
+</div>
+@if (@isActiveCAPTCHA == "true")
+{
+    <text>@Html.Hidden("RecaptchaToken", "")</text>
+    <text>@Html.Hidden("siteKey", siteKey)</text>
+}
+@Html.Hidden("returnUrl", ViewData["ReturnUrl"])
+
+@Html.Hidden("isStaticLogin", @isStaticLogin)
+@Html.Hidden("routUrl", Url.Content("~/"))
+
+@section Scripts {
+<script>
+    var VAR_CAPTCHA_ACTIVATE = @isActiveCAPTCHA;
+</script>
+@if (@isActiveCAPTCHA == "true")
+{
+<script src="https://www.google.com/recaptcha/api.js?render=@siteKey"></script>
+}
+<script src="~/js/Account/main.js" type="text/javascript" asp-append-version="true"></script>
+
+}

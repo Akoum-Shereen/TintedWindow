@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = @Localizer["EditProfile"];
+
+    var id = "";
+    var fullName = "";
+    var userName = "";
+    var email = "";
+    var phone = "";
+    var idWebRole = "";
+    var webRoleName = "";
+    var password = "";
+    var confirmPassword = "";
+
+    var roles = (dynamic)ViewData["webUsersData"];
+    var UserInfo = (dynamic)ViewData["UserInfo"];
+    dynamic Model = null;
+    string userId = "0";
+    string action = "Create";
+
+    if (ViewData["UserAction"] == "userProfile" && UserInfo != null)
+    {
+        Model = UserInfo.data;
+        action = "EditProfile";
+
+        userId = "";
+        fullName = Model.fullName;
+        userName = Model.username;
+        email = Model.email;
+        phone = Model.phone;
+        idWebRole = Model.idWebRole;
+    }
+}
+<div class="d-flex flex-column flex-column-fluid">
+    <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 ">
+        <div id="kt_app_toolbar_container" class="app-container d-flex flex-stack ">
+        </div>
+    </div>
+    <div id="kt_app_content" class="app-content  flex-column-fluid ">
+        <div id="kt_app_content_container" class="app-container">
+            <div class="row g-7">
+                <div class="card card-flush h-lg-100" id="kt_users_main">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <h2>@ViewData["Title"]</h2>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0">
+                        <form id="kt_user_form" class="form" asp-action=@action autocomplete="off">
+                            <input type="hidden" id="userId" value="@userId" />
+                            <input type="hidden" id="actionName" value="@action" />
+                            <div class="row">
+                                <div class="col-md-6 mb-5 fv-row">
+                                    <label class="required form-label mb-2">@Localizer["Full Name"]</label>
+                                    <input id="fullName" name="fullName" class="form-control" type="text" placeholder="@Localizer["Full Name"]" value="@Html.Raw(fullName)">
+                                </div>
+
+                                <div class="col-md-6 mb-5 fv-row">
+                                    <label class="required input_label  form-label mb-2">@Localizer["User Name"]</label>
+                                    <input id="UserName" name="UserName" class="form-control" type="text" placeholder="@Localizer["User Name"]" value="@Html.Raw(userName)" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-5 fv-row">
+                                    <label class="required input_label  form-label mb-2">@Localizer["Email"]</label>
+                                    <input id="email" name="email" class="form-control" type="text" placeholder="@Localizer["Email"]" value="@Html.Raw(email)">
+                                </div>
+
+                                <div class="col-md-6 mb-5 fv-row">
+                                    <label class="required input_label form-label mb-2">@Localizer["Phone"]</label>
+                                    <input id="user_phone" name="user_phone" class="form-control NumbersOnly" style="direction:rtl" type="number" placeholder="@Localizer["Phone"]" value="@Html.Raw(phone)">
+                                </div>
+                            </div>
+
+                            <div class="separator mb-6"></div>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" id="kt_user_modal_submit" class="btn btn-primary">
+                                    <span class="indicator-label">@Localizer["Submit"]</span>
+                                    <span class="indicator-progress">
+                                        @Localizer["PleaseWait..."]
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.AntiForgeryToken()
+@Html.Hidden("routUrl", Url.Content("~/"))
+@Html.Hidden("ValidateNumber", "Validation/IsValidPhoneNumber")
+
+@section Scripts {
+<environment>
+    <script src="~/js/UserConfiguration/EditProfile.js" type="text/javascript" asp-append-version="true"></script>
+</environment>
+}

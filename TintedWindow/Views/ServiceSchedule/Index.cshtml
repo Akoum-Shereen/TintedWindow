@@ -1,0 +1,354 @@
+﻿@{
+
+    var permissions = ViewData["permissions"] as Dictionary<string, bool>;
+
+    var isAddServiceSchedule = permissions["canAdd"];
+    var isEditServiceSchedule = permissions["canUpdate"];
+    var isDeleteServiceSchedule = permissions["canDelete"];
+
+    var controllerName = HelperExtensions.GetRequiredString(Html.ViewContext.RouteData, "controller");
+    var s_list = (dynamic)ViewData["servicesUnassignedSchedule"] == null ? new List<dynamic>() : (dynamic)ViewData["servicesUnassignedSchedule"];
+    var s_listAll = (dynamic)ViewData["services"] == null ? new List<dynamic>() : (dynamic)ViewData["services"];
+
+}
+@section PageStyles{
+<link href="~/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+}
+
+<div class="app-main flex-column flex-row-fluid user_list " id="kt_app_main">
+
+
+    <!--begin::Content wrapper-->
+    <div class="d-flex flex-column flex-column-fluid">
+        <!--begin::Toolbar-->
+        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+            <!--begin::Toolbar container-->
+            <div id="kt_app_toolbar_container" class="app-container d-flex flex-stack">
+                <!--begin::Page title-->
+                <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+                    <!--begin::Title-->
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">@Localizer["ServiceScheduleList"]</h1>
+                    <!--end::Title-->
+                </div>
+                <!--end::Page title-->
+
+            </div>
+            <!--end::Toolbar container-->
+        </div>
+        <!--end::Toolbar-->
+        <!--begin::Content-->
+        <div id="kt_app_content" class="app-content flex-column-fluid">
+            <!--begin::Content container-->
+            <div id="kt_app_content_container" class="app-container">
+                <!--begin::Card-->
+                <div class="card overlay overlay-block" id="mainData">
+                    <!--begin::Card header-->
+                    <div class="card-header border-0 pt-6">
+                        <!--begin::Card title-->
+                        <div class="card-title">
+                            @* <!--begin::Search-->
+                                <div class="d-flex align-items-center position-relative my-1">
+                                <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                                </i>
+                                <input type="search" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search..." />
+                                </div>
+                                <!--end::Search-->*@
+                        </div>
+                        <!--begin::Card title-->
+                        <!--begin::Card toolbar-->
+                        <div class="card-toolbar">
+                            <!--begin::Toolbar-->
+                            <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+                                <!--end::Filter-->
+                                @if (@isAddServiceSchedule)
+                                {
+                                    @*<button type="button" class="btn btn-primary" onclick="window.location.href='@Url.Content("~/" + @controllerName + "/Create")'">*@
+                                    <button type="button" class="btn btn-primary" onclick="edit('0')">
+                                        <i class="ki-outline ki-plus fs-2"></i>@Localizer["Add"]
+                                    </button>
+                                }
+                            </div>
+                            <!--end::Toolbar-->
+
+                        </div>
+                        <!--end::Card toolbar-->
+
+                    </div>
+                    <!--end::Card header-->
+                    <!--begin::Card body-->
+                    <div class="card-body py-4">
+                        <!--begin::Table-->
+                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table"> </table>
+                        <!--end::Table-->
+                        <div class="overlay-layer card-rounded bg-light bg-opacity-80" id="LoaderSpinner">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">@Localizer["Loading..."]</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Card body-->
+                </div>
+                <!--end::Card-->
+            </div>
+            <!--end::Content container-->
+        </div>
+        <!--end::Content-->
+    </div>
+    <!--end::Content wrapper-->
+</div>
+
+<!--begin::Modal - Add task-->
+<div class="modal fade" id="kt_modal_ServiceSchedule" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered mw-650px">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header" id="kt_modal_ServiceSchedule_header">
+                <!--begin::Modal title-->
+                <h2 class="fw-bold" id="mainTitle">@Localizer["AddServiceSchedule"]</h2>
+                <!--end::Modal title-->
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-ServiceSchedule-modal-action="close">
+                    <i class="ki-duotone ki-cross fs-1">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                </div>
+                <!--end::Close-->
+            </div>
+            <!--end::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                <!--begin::Form-->
+                <form id="kt_modal_ServiceSchedule_form" class="form">
+                    @Html.Hidden("idServiceSchedule", "")
+                    <!--begin::Scroll-->
+                    <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_ServiceSchedule_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
+                         data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_ServiceSchedule_header" data-kt-scroll-wrappers="#kt_modal_ServiceSchedule_scroll" data-kt-scroll-offset="300px">
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <label class="input_label mb-2 m-1">@Localizer["Service"]</label>
+                            <select class="form-select form-select-md" data-control="select2" name="idservice" id="idservice">
+                                <option value="">@Localizer["Service"]</option>
+                                @foreach (var item in new List<dynamic>(s_listAll))
+                                {
+                                    <option value="@Html.Raw(item.idservice)">@Html.Raw(item.title)</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 mb-2">@Localizer["Startdate"]</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" name="startdate" id="startdate" class="form-control" placeholder="@Localizer["Startdate"]" inert />
+
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 mb-2">@Localizer["Enddate"]</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" name="enddate" id="enddate" class="form-control" placeholder="@Localizer["Enddate"]" inert />
+
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        <div class="col-12 mb-5 fv-row">
+                            <label class="required input-label mb-2">@Localizer["Openingdayscount"]</label>
+                            <input id="openingdayscount" name="openingdayscount" min=1 max=999 style="direction:rtl" class="form-control" type="number" placeholder="@Localizer["Openingdayscount"]">
+                        </div>
+                        <div class="col-12 mb-5 fv-row">
+                            <label class="required input-label mb-2">@Localizer["Schedulingdaybeforeendofappointments"]</label>
+                            <input id="schedulingdaybeforeendofappointments" name="schedulingdaybeforeendofappointments" min=1 max=999 style="direction:rtl" class="form-control" type="number" placeholder="@Localizer["Schedulingdaybeforeendofappointments"]">
+                        </div>
+                    </div>
+                    <!--end::Scroll-->
+                    <!--begin::Actions-->
+                    <div class="text-center pt-15">
+                        <button type="reset" class="btn btn-light me-3" data-kt-ServiceSchedule-modal-action="cancel">@Localizer["Discard"]</button>
+                        <button type="submit" class="btn btn-primary" data-kt-ServiceSchedule-modal-action="submit">
+                            <span class="indicator-label">@Localizer["Submit"]</span>
+                            <span class="indicator-progress">
+                                @Localizer["PleaseWait..."]
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                    </div>
+                    <!--end::Actions-->
+                </form>
+                <!--end::Form-->
+            </div>
+            <!--end::Modal body-->
+        </div>
+        <!--end::Modal content-->
+    </div>
+    <!--end::Modal dialog-->
+</div>
+<!--end::Modal - Add task-->
+<!--begin::Modal - Add task-->
+<div class="modal fade" id="kt_modal_ServiceScheduleDetails" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered" style="max-width:1480px">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header" id="kt_modal_ServiceScheduleDetails_header">
+                <!--begin::Modal title-->
+                <h2 class="fw-bold" id="mainTitle">@Localizer["ServiceScheduleDetails"]</h2>
+                <!--end::Modal title-->
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-ServiceScheduleDetails-modal-action="close">
+                    <i class="ki-duotone ki-cross fs-1">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                </div>
+                <!--end::Close-->
+            </div>
+            <!--end::Modal header-->
+            <!--begin::Modal body-->
+            @*    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                <!--begin::Form-->
+                <!--begin::Scroll-->
+                <div  class="d-flex text-center flex-column scroll-y me-n7 pe-7" id="kt_modal_ServiceScheduleDetails_scroll " data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
+                data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_ServiceScheduleDetails_header" data-kt-scroll-wrappers="#kt_modal_ServiceScheduleDetails_scroll" data-kt-scroll-offset="300px">
+                <table class="table align-middle table-row-dashed fs-6 gy-5 cell-border" id="kt_table_inner"> </table>
+
+                <div class="overlay-layer card-rounded bg-light bg-opacity-80" id="LoaderSpinner_Stable" hidden>
+                <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">@Localizer["Loading..."]</span>
+                </div>
+                </div>
+                </div>
+                <!--end::Scroll-->
+                <!--end::Form-->
+                </div>
+                <!--end::Modal body-->*@
+            <div class="modal-body mx-5 mx-xl-15 my-7" style=" overflow: hidden">
+                <!--begin::Form-->
+                <!--begin::Scroll-->
+                <div class="d-flex text-center flex-column me-n7 pe-7" id="kt_modal_ServiceScheduleDetails_scroll">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5 cell-border" id="kt_table_inner"></table>
+
+                    <div class="overlay-layer card-rounded bg-light bg-opacity-80" id="LoaderSpinner_Stable" hidden>
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">@Localizer["Loading..."]</span>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Scroll-->
+                <!--end::Form-->
+            </div>
+            <!--end::Modal body-->
+
+        </div>
+        <!--end::Modal content-->
+    </div>
+    <!--end::Modal dialog-->
+</div>
+<!--end::Modal - Add task-->
+<!--begin::Modal - Add task-->
+<div class="modal fade" id="kt_modal_ServiceScheduleDetailsUpdate" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered mw-650px">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header" id="kt_modal_ServiceScheduleDetailsUpdate_header">
+                <!--begin::Modal title-->
+                <h2 class="fw-bold" id="mainTitle">@Localizer["ServiceScheduleDetailsUpdate"]</h2>
+                <!--end::Modal title-->
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-ServiceScheduleDetailsUpdate-modal-action="close">
+                    <i class="ki-duotone ki-cross fs-1">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                </div>
+                <!--end::Close-->
+            </div>
+            <!--end::Modal header-->
+            <!--begin::Modal body-->
+            <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                <!--begin::Form-->
+                <form id="kt_modal_ServiceScheduleDetailsUpdate_form" class="form">
+
+                    <!--begin::Scroll-->
+                    <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_ServiceScheduleDetailsUpdate_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
+                         data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_ServiceScheduleDetailsUpdate_header" data-kt-scroll-wrappers="#kt_modal_ServiceScheduleDetailsUpdate_scroll" data-kt-scroll-offset="300px">
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <label class="required input_label mb-2 m-1">@Localizer["Service"]</label>
+                            <select class="form-select form-select-md" data-control="select2" name="idserviceD" id="idserviceD">
+                                <option value="">@Localizer["Service"]</option>
+                                @foreach (var item in s_listAll)
+                                {
+                                    <option value="@Html.Raw(item.idservice)">@Html.Raw(item.title)</option>
+                                }
+                            </select>
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <label class="required input_label mb-2 m-1">@Localizer["Scheduledate"]</label>
+                            <input type="text" name="scheduledate" id="scheduledate" class="form-control" placeholder="@Localizer["Scheduledate"]" />
+                        </div>
+                        <!--end::Input group-->
+
+                        <div class="fv-row mb-7">
+                            <label class="required input-label mb-2">@Localizer["Maxappointments"]</label>
+                            <input id="maxappointment" name="maxappointment" min=1 max=999 style="direction:rtl" class="form-control NumbersOnly" type="number" placeholder="@Localizer["Maxappointments"]">
+                        </div>
+
+
+                    </div>
+                    <!--end::Scroll-->
+                    <!--begin::Actions-->
+                    <div class="text-center pt-15">
+                        <button type="reset" class="btn btn-light me-3" data-kt-ServiceScheduleDetailsUpdate-modal-action="cancel">@Localizer["Discard"]</button>
+                        <button type="submit" class="btn btn-primary" data-kt-ServiceScheduleDetailsUpdate-modal-action="submit">
+                            <span class="indicator-label">@Localizer["Submit"]</span>
+                            <span class="indicator-progress">
+                                @Localizer["PleaseWait..."]
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                    </div>
+                    <!--end::Actions-->
+                </form>
+                <!--end::Form-->
+            </div>
+            <!--end::Modal body-->
+        </div>
+        <!--end::Modal content-->
+    </div>
+    <!--end::Modal dialog-->
+</div>
+<!--end::Modal - Add task-->
+@Html.AntiForgeryToken()
+@Html.Hidden("gridList", "ServiceSchedule/List")
+@Html.Hidden("Delete", "ServiceSchedule/Delete")
+@Html.Hidden("SectionName", "ServiceSchedule")
+@Html.Hidden("routUrl", Url.Content("~/"))
+
+@section Scripts {
+<environment>
+    <script>
+        var isEditServiceSchedule = @isEditServiceSchedule.ToString().ToLower();
+        var isDeleteServiceSchedule = @isDeleteServiceSchedule.ToString().ToLower();
+    </script>
+    <script src="~/assets/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
+    <script src="~/js/ServiceSchedule/main.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/js/dataTable.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/js/innerDataTable.js" type="text/javascript" asp-append-version="true"></script>
+
+</environment>
+}
+

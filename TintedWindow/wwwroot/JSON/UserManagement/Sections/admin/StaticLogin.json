@@ -1,0 +1,259 @@
+{
+  "statusCode": {
+    "code": 0,
+    "message": "success"
+  },
+  "user": {
+    "fullName": "admin admin",
+    "email": "admin@inmobiles.net",
+    "username": "admin",
+    "token": "3af3dd6f-7e4c-4033-a705-44da364eb28c",
+    "utype": 0,
+    "iddevice": "string"
+  },
+  "sections": [
+    {
+      "id": "6d741af8-3679-4f24-a08b-c82814520afd",
+      "name": "Corporates",
+      "parentId": null,
+      "computerName": "Corporates",
+      "actions": [
+        "View"
+      ]
+    },
+    {
+      "id": "f26be20a-cb58-4e2b-b633-1f9e8e48d3fa",
+      "name": "Corporate",
+      "parentId": "6d741af8-3679-4f24-a08b-c82814520afd",
+      "computerName": "Corporate",
+      "actions": [
+        "View",
+        "Add",
+        "Update",
+        "Delete"
+      ]
+    },
+    {
+      "id": "f82f14d9-6bf9-4196-94a1-ac01f5c7b95a",
+      "name": "Corporate Group",
+      "parentId": "6d741af8-3679-4f24-a08b-c82814520afd",
+      "computerName": "CorporateGroup",
+      "actions": [
+        "View",
+        "Add",
+        "Update",
+        "Delete"
+      ]
+    },
+    {
+      "id": "431c7468-cbd2-4e0d-8288-8096edf1651c",
+      "name": "Corporate Service",
+      "parentId": "6d741af8-3679-4f24-a08b-c82814520afd",
+      "computerName": "CorporateService",
+      "actions": [
+        "View",
+        "Add",
+        "Update",
+        "Delete"
+      ]
+    },
+
+    {
+      "id": "0418c23c-7ada-4262-8a63-f640aa2bacce",
+      "name": "Services",
+      "parentId": null,
+      "computerName": "Services",
+      "actions": [
+        "View"
+      ]
+    },
+    {
+      "id": "e987fd5f-0f72-4a29-9984-ac2d88b5b351",
+      "name": "Category",
+      "computerName": "Category",
+      "parentId": "0418c23c-7ada-4262-8a63-f640aa2bacce",
+      "actions": [
+        "View",
+        "Add",
+        "Update",
+        "Delete"
+      ]
+    },
+    {
+      "id": "e78f2026-c9bb-4281-b12d-544cf3f6a830",
+      "name": "Service",
+      "parentId": "0418c23c-7ada-4262-8a63-f640aa2bacce",
+      "computerName": "Service",
+      "actions": [
+        "View",
+        "Add",
+        "Update",
+        "Delete"
+      ]
+    },
+    {
+      "id": "58c0feaf-103d-42e8-9112-04f84ec66490",
+      "name": "Service Link",
+      "parentId": "0418c23c-7ada-4262-8a63-f640aa2bacce",
+      "computerName": "ServiceLink",
+      "actions": [
+        "View",
+        "Add",
+        "Update",
+        "Delete"
+      ]
+    },
+
+
+    {
+      "id": "f79feadf-3583-4ef3-886b-9f49867df85d",
+      "name": "Appointments",
+      "parentId": null,
+      "computerName": "Appointments",
+      "actions": [
+        "View"
+      ]
+    },
+    {
+      "id": "65a9be29-3d70-42c8-974b-96633a72cb48",
+      "name": "Service Schedule",
+      "parentId": "f79feadf-3583-4ef3-886b-9f49867df85d",
+      "computerName": "ServiceSchedule",
+      "actions": [
+        "View",
+        "Add",
+        "Update"
+      ]
+    },
+    {
+      "id": "8990b684-415c-46d5-b1b1-c35ad23ce2ea",
+      "name": "ManageAppointments",
+      "parentId": "f79feadf-3583-4ef3-886b-9f49867df85d",
+      "computerName": "ManageAppointments",
+      "actions": [
+        "View"
+      ]
+    },
+    {
+      "id": "cbc69451-c39a-4476-9798-e09f9f2b560a",
+      "name": "DailyAppointments",
+      "parentId": "f79feadf-3583-4ef3-886b-9f49867df85d",
+      "computerName": "DailyAppointments",
+      "actions": [
+        "View",
+        "Update"
+
+      ]
+    },
+    {
+      "id": "d9317288-34af-4c8f-a691-5d7a92f0b59c",
+      "name": "DailyAppointmentsByNumber",
+      "parentId": "f79feadf-3583-4ef3-886b-9f49867df85d",
+      "computerName": "DailyAppointmentsByNumber",
+      "actions": [
+        "View",
+        "Add",
+        "Update",
+        "Delete"
+      ]
+    },
+
+
+
+    {
+      "id": "3543dc04-46a4-4e5b-a045-64985852484e",
+      "name": "Announcement",
+      "computerName": "Announcement",
+      "parentId": null,
+      "actions": [
+        "View",
+        "Add",
+        "Update",
+        "Delete"
+      ]
+    },
+
+
+
+
+
+    {
+      "id": "09b60be9-3548-4342-8b57-3bf9dd0a160c",
+      "name": "Global Settings",
+      "computerName": "GlobalSettings",
+      "parentId": null,
+      "actions": [
+        "View"
+      ]
+    },
+    {
+      "id": "ae38ff96-990f-4370-93fa-adf03dac0ebf",
+      "name": "Advanced Settings",
+      "computerName": "AdvancedSettings",
+      "parentId": "09b60be9-3548-4342-8b57-3bf9dd0a160c",
+      "actions": [
+        "View",
+        "Update"
+      ]
+    },
+    {
+      "id": "937ee5da-f81b-4089-aaa6-754ee590b636",
+      "name": "Holiday",
+      "computerName": "Holiday",
+      "parentId": "09b60be9-3548-4342-8b57-3bf9dd0a160c",
+      "actions": [
+        "View",
+        "Add",
+        "Delete"
+      ]
+    },
+    {
+      "id": "bd73c0c1-f594-4a84-9409-9843bf852c9a",
+      "name": "Non Business Day",
+      "computerName": "NonBusinessDay",
+      "parentId": "09b60be9-3548-4342-8b57-3bf9dd0a160c",
+      "actions": [
+        "View",
+        "Add",
+        "Delete"
+      ]
+    },
+
+
+
+
+
+
+    {
+      "id": "cc6b6c90-8191-411f-b15d-fa42787a58fd",
+      "name": "Location",
+      "parentId": null,
+      "computerName": "Location",
+      "actions": [
+        "View",
+        "Add",
+        "Update",
+        "Delete"
+      ]
+    },
+
+    {
+      "id": "b3f24be5-61b4-4141-8f67-086cfaf02bad",
+      "name": "Counter",
+      "parentId": null,
+      "computerName": "Counter",
+      "actions": [
+        "View",
+        "Add",
+        "Update",
+        "Delete"
+      ]
+    }
+
+
+  ],
+  "clientInfo": {
+    "clientName": "string",
+    "clientProfilePicture": "string"
+  }
+}

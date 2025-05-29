@@ -1,0 +1,14 @@
+﻿{
+  "data": {
+    "id": "3af3dd6f-7e4c-4033-a705-44da364eb28c",
+    "fullName": "admin",
+    "email": "admin@inmobiles.net",
+    "username": "admin",
+    "phone": "96171456321",
+    "mobileOperator": null
+  },
+  "statusCode": {
+    "code": 0,
+    "message": "Success"
+  }
+}

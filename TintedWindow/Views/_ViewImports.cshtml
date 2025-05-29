@@ -1,0 +1,16 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@using TintedWindow
+@using TintedWindow.Models
+@using TintedWindow.Models.AccountViewModels
+@using TintedWindow.Models.WebManagement
+@using TintedWindow.Extensions
+
+@using Microsoft.Extensions.Configuration
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@inject IHtmlLocalizer<SharedResource> Localizer
+
+@inject IConfiguration Configuration
+@inject IHttpContextAccessor Accessor
