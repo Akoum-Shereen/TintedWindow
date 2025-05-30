@@ -19,4 +19,11 @@
     <Folder Include="wwwroot\js\Localization\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\js\Application\create.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

@@ -1,56 +1,8 @@
-﻿@using TintedWindow.Models.Requests
+﻿@{
+    ViewData["Title"] = Localizer["application"] ;
 
-@{
-    var title = ViewData["UserAction"] == "edit" ? "Edit User" : "Add New";
-    ViewData["Title"] = "Web Users - " + title;
-    var PASSWORD_INPUT_MIN_LENGTH = Configuration.GetValue<string>("Validation:PASSWORD_INPUT_MIN_LENGTH");
-    var PASSWORD_INPUT_MAX_LENGTH = Configuration.GetValue<string>("Validation:PASSWORD_INPUT_MAX_LENGTH");
-
-    var id = "";
-    var fullName = "";
-    var userName = "";
-    var email = "";
-    var phone = "";
-    var idWebRole = "";
-    var webRoleName = "";
-    var password = "";
-    var confirmPassword = "";
-
-    var roles = ViewData["webUsersData"] != null ? (dynamic)ViewData["webUsersData"] : new List<dynamic>();
-    var UserInfo = (dynamic)ViewData["UserInfo"];
-    dynamic Model = null;
-    string userId = "0";
-    string action = "Create";
-    string titleBar = "Add New Web User";
-
-    if (ViewData["UserAction"] == "edit" && UserInfo != null)
-    {
-        Model = UserInfo.data;
-        action = "Edit";
-        titleBar = "Edit Web User";
-
-        userId = ViewData["UserID"].ToString();
-        fullName = Model.fullName;
-        userName = Model.username;
-        email = Model.email;
-        phone = Model.phone;
-        idWebRole = Model.idWebRole;
-    }
-    else if (ViewData["UserAction"] == "userProfile" && UserInfo != null)
-    {
-        Model = UserInfo.data;
-        action = "EditProfile";
-        titleBar = "Edit Profile";
-
-        userId = "";
-        fullName = Model.fullName;
-        userName = Model.username;
-        email = Model.email;
-        phone = Model.phone;
-        idWebRole = Model.idWebRole;
-    }
 }
-<a href="@(Url.Content("~/WebUsers"))" class="back-btn" style="display:none;"></a>
+<a href="@(Url.Content("~/Application"))" class="back-btn" style="display:none;"></a>
 
 <div class="d-flex flex-column flex-column-fluid">
     <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 ">
@@ -61,31 +13,9 @@
             <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
                 <!--begin::Title-->
                 <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                    @titleBar
+                    @ViewData["Title"]
                 </h1>
                 <!--end::Title-->
-                <!--begin::Breadcrumb-->
-                <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
-                    <!--begin::Item-->
-                    <li class="breadcrumb-item text-muted">
-                        <a href="@Url.Action("Index", "WebUsers")" class="text-muted text-hover-primary">
-                            Web User
-                        </a>
-                    </li>
-                    <!--end::Item-->
-                    <!--begin::Item-->
-                    <li class="breadcrumb-item">
-                        <span class="bullet bg-gray-400 w-5px h-2px"></span>
-                    </li>
-                    <!--end::Item-->
-                    <!--begin::Item-->
-                    <li class="breadcrumb-item text-muted">
-                        @titleBar
-                    </li>
-                    <!--end::Item-->
-
-                </ul>
-                <!--end::Breadcrumb-->
             </div>
             <!--end::Page title-->
         </div>
@@ -103,81 +33,34 @@
                     <!--begin::Card body-->
                     <div class="card-body">
                         <!--begin::Form-->
-                        <form id="kt_user_form" class="form" asp-action=@action autocomplete="off">
-                            <input type="hidden" id="userId" value="@userId" />
-                            <input type="hidden" id="actionName" value="@action" />
+                        <form id="kt_user_form" class="form" autocomplete="off">
                             <div class="row">
                                 <div class="col-md-6 mb-5 fv-row">
+                                    <label class="required input-label mb-2">@Localizer["plateNumber"]</label>
+                                    <input id="plateNumber" name="plateNumber" class="form-control" type="text" placeholder="@Localizer["plateNumber"]">
+                                </div>
+
+                                <div class="col-md-6 mb-5 fv-row">
                                     <label class="required input-label mb-2">@Localizer["Full Name"]</label>
-                                    <input id="fullName" name="fullName" class="form-control" type="text" placeholder="@Localizer["Full Name"]" value="@Html.Raw(fullName)">
+                                    <input id="fullName" name="fullName" class="form-control" type="text" placeholder="@Localizer["Full Name"]">
                                 </div>
 
                                 <div class="col-md-6 mb-5 fv-row">
                                     <label class="required input_label mb-2">@Localizer["User Name"]</label>
-                                    <input id="UserName" name="UserName" class="form-control" type="text" placeholder="@Localizer["User Name"]" value="@Html.Raw(userName)" autocomplete="off">
+                                    <input id="UserName" name="UserName" class="form-control" type="text" placeholder="@Localizer["User Name"]" autocomplete="off">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-5 fv-row">
                                     <label class="required input_label mb-2">@Localizer["Email"]</label>
-                                    <input id="email" name="email" class="form-control" type="text" placeholder="@Localizer["Email"]" value="@Html.Raw(email)">
+                                    <input id="email" name="email" class="form-control" type="text" placeholder="@Localizer["Email"]">
                                 </div>
 
                                 <div class="col-md-6 mb-5 fv-row">
                                     <label class="required input_label mb-2">@Localizer["Phone"]</label>
-                                    <input id="user_phone" name="user_phone" class="form-control NumbersOnly" type="text" placeholder="@Localizer["Phone"]" value="@Html.Raw(phone)">
+                                    <input id="user_phone" name="user_phone" class="form-control NumbersOnly" type="text" placeholder="@Localizer["Phone"]">
                                 </div>
                             </div>
-                            @if (Model == null)
-                            {
-                                <div class="row">
-                                    <!--begin::Main wrapper-->
-                                <div class="col-md-6 mb-5 fv-row mb-4" data-kt-password-meter="true">
-                                        <label class="required input_label mb-2">@Localizer["Password"]</label>
-                                        <div class="position-relative mb-3">
-                                            <input id="password" name="password" class="form-control" type="password" placeholder="@Localizer["Password"]" autocomplete="new-password">
-                                            <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
-                                                <i class="ki-duotone ki-eye-slash fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
-                                                <i class="ki-duotone ki-eye d-none fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <!--end::Main wrapper-->
-                                    <!--begin::Main wrapper-->
-                                <div class="col-md-6 mb-5 fv-row mb-4" data-kt-password-meter="true">
-                                        <label class="required input_labe mb-2">@Localizer["Confirm Password"]</label>
-                                        <div class="position-relative mb-3">
-                                            <input id="confirmPassword" name="confirmPassword" class="form-control" type="password" placeholder="@Localizer["Confirm Password"]" autocomplete="new-password">
-                                            <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
-                                                <i class="ki-duotone ki-eye-slash fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
-                                                <i class="ki-duotone ki-eye d-none fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                            @if (ViewData["UserAction"] != "userProfile")
-                            {
-                                <div class="row">
-                                    <div class="col-md-6 mb-5 fv-row">
-                                        <label class="required input_label mb-2">@Localizer["Role"]</label>
-                                        <select class="form-select form-select-md" data-control="select2" name="idWebRole" id="idWebRole">
-                                            <option value="">@Localizer["Role"]</option>
-                                            @foreach (var role in roles)
-                                            {
-                                                if (role.id == idWebRole)
-                                                {
-                                                    <option value="@Html.Raw(role.id)" selected>@Html.Raw(role.name)</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@Html.Raw(role.id)">@Html.Raw(role.name)</option>
-                                                }
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                            }
 
                             <div class="separator mb-6"></div>
                             <!--end::Separator-->
@@ -218,16 +101,7 @@
 </div>
 
 @Html.AntiForgeryToken()
-@Html.Hidden("routUrl", Url.Content("~/"))
-@Html.Hidden("ValidateNumber", "Validation/IsValidPhoneNumber")
 
 @section Scripts {
-<script>
-    var PASSWORD_INPUT_MIN_LENGTH = @PASSWORD_INPUT_MIN_LENGTH;
-    var PASSWORD_INPUT_MAX_LENGTH = @PASSWORD_INPUT_MAX_LENGTH;
-</script>
-
-<environment>
-    <script src="~/js/WebUsers/create.js" type="text/javascript" asp-append-version="true"></script>
-</environment>
+    <script src="~/js/Application/create.js" type="text/javascript" asp-append-version="true"></script>
 }

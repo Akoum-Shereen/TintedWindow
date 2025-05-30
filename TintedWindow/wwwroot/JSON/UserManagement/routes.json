@@ -2,7 +2,7 @@
   "routes": [
     {
       "computerName": "Application",
-      "link": "Application",
+      "link": "Application/Create",
       "displayName": "application",
       "icon": "<i class='fas fa-regular fa-ticket'></i>"
     },

@@ -369,4 +369,7 @@
   <data name="applicationList" xml:space="preserve">
     <value>قائمة الطلبات</value>
   </data>
+  <data name="plateNumber" xml:space="preserve">
+    <value>رقم اللوحة</value>
+  </data>
 </root>

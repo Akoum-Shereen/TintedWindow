@@ -99,6 +99,8 @@
 
     @Html.Hidden("routUrl", Url.Content("~/"))
     @Html.Hidden("imgUrl", @Configuration.GetSection("MyConfiguration")["imgUrl"])
+    @Html.Hidden("ValidateNumber", "Validation/IsValidPhoneNumber")
+
     <script>
         var xyzwebkappesecygen = @Html.Raw(staticKey);
     </script>
