@@ -1,5 +1,6 @@
 ﻿@{
-    ViewData["Title"] = Localizer["application"] ;
+    ViewData["Title"] = Localizer["application"];
+    var plateSymbolList = ViewData["plateSymbolList"] == null ? new List<dynamic>() : (dynamic)ViewData["plateSymbolList"];
 
 }
 <a href="@(Url.Content("~/Application"))" class="back-btn" style="display:none;"></a>
@@ -37,28 +38,89 @@
                             <div class="row">
                                 <div class="col-md-6 mb-5 fv-row">
                                     <label class="required input-label mb-2">@Localizer["plateNumber"]</label>
-                                    <input id="plateNumber" name="plateNumber" class="form-control" type="text" placeholder="@Localizer["plateNumber"]">
+                                    <input id="plateNumber" name="plateNumber" class="form-control NumbersOnly" type="text" maxLength="7" placeholder="@Localizer["plateNumber"]">
                                 </div>
-
-                                <div class="col-md-6 mb-5 fv-row">
-                                    <label class="required input-label mb-2">@Localizer["Full Name"]</label>
-                                    <input id="fullName" name="fullName" class="form-control" type="text" placeholder="@Localizer["Full Name"]">
+                                <div class="col-md-3 mb-5 fv-row">
+                                    <label class="required input-label mb-2">@Localizer["plateSymbol"]</label>
+                                    <select class="form-select form-select-md" data-control="select2" name="plateSymbol" id="plateSymbol" data-allow-clear="true" multiple
+                                            data-placeholder="@Localizer["plateSymbol"]">
+                                        @foreach (var item in plateSymbolList)
+                                        {
+                                            <option value="@Html.Raw(item)">@Html.Raw(item)</option>
+                                        }
+                                    </select>
                                 </div>
-
-                                <div class="col-md-6 mb-5 fv-row">
-                                    <label class="required input_label mb-2">@Localizer["User Name"]</label>
-                                    <input id="UserName" name="UserName" class="form-control" type="text" placeholder="@Localizer["User Name"]" autocomplete="off">
+                                <div class="col-md-3 mb-5 fv-row d-flex align-items-end">
+                                    <button type="button" class="btn btn-primary btn-sm">
+                                        <i class="fa fa-refresh"></i> Fetch
+                                    </button>
                                 </div>
                             </div>
+                            <div class="separator mt-6 mb-11"></div>
                             <div class="row">
-                                <div class="col-md-6 mb-5 fv-row">
-                                    <label class="required input_label mb-2">@Localizer["Email"]</label>
-                                    <input id="email" name="email" class="form-control" type="text" placeholder="@Localizer["Email"]">
+                                <div class="col-md-3 mb-5 fv-row">
+                                    <label class="required input-label mb-2">@Localizer["carBrand"]</label>
+                                    <input id="carBrand" name="carBrand" class="form-control" type="text" placeholder="@Localizer["carBrand"]">
                                 </div>
 
+                                <div class="col-md-3 mb-5 fv-row">
+                                    <label class="required input-label mb-2">@Localizer["carManufactureDate"]</label>
+                                    <input id="carManufactureDate" name="carManufactureDate" class="form-control" type="text" placeholder="@Localizer["carManufactureDate"]">
+                                </div>
+
+
+                                <div class="col-md-3 mb-5 fv-row">
+                                    <label class="required input-label mb-2">@Localizer["carModel"]</label>
+                                    <input id="carModel" name="carModel" class="form-control" type="text" placeholder="@Localizer["carModel"]">
+                                </div>
+
+
+                                <div class="col-md-3 mb-5 fv-row">
+                                    <label class="required input-label mb-2">@Localizer["carColor"]</label>
+                                    <input id="carColor" name="carColor" class="form-control" type="text" placeholder="@Localizer["carColor"]">
+                                </div>
+                                
+                                <div class="col-md-6 mb-5 fv-row">
+                                    <label class="required input-label mb-2">@Localizer["cardType"]</label>
+                                    <input id="cardType" name="cardType" class="form-control" type="text" placeholder="@Localizer["cardType"]">
+                                </div>
+                                
+                                <div class="col-md-6 mb-5 fv-row">
+                                    <label class="required input-label mb-2">@Localizer["ownershipDate"]</label>
+                                    <input id="ownershipDate" name="ownershipDate" class="form-control" type="text" placeholder="@Localizer["ownershipDate"]">
+                                </div>
+
+
+                            </div>
+                            <div class="separator mt-6 mb-11"></div>
+                            <div class="row" id="personInfoContainer">
+                                <div class="col-md-6 mb-5 fv-row">
+                                    <label class="required input-label mb-2">@Localizer["tripleName"]</label>
+                                    <input id="tripleName" name="tripleName" class="form-control" type="text" placeholder="@Localizer["tripleName"]">
+                                </div>
+                                <div class="col-md-6 mb-5 fv-row">
+                                    <label class="required input_label mb-2">@Localizer["placeOfResidence"]</label>
+                                    <input id="placeOfResidence" name="placeOfResidence" class="form-control" type="text" placeholder="@Localizer["placeOfResidence"]" autocomplete="off">
+                                </div>
                                 <div class="col-md-6 mb-5 fv-row">
                                     <label class="required input_label mb-2">@Localizer["Phone"]</label>
                                     <input id="user_phone" name="user_phone" class="form-control NumbersOnly" type="text" placeholder="@Localizer["Phone"]">
+                                </div>
+                                <div class="col-md-6 mb-5 fv-row">
+                                    <label class="required input_label mb-2">@Localizer["motherName"]</label>
+                                    <input id="motherName" name="motherName" class="form-control" type="text" placeholder="@Localizer["motherName"]">
+                                </div>
+                                <div class="col-md-6 mb-5 fv-row">
+                                    <label class="required input_label mb-2">@Localizer["placeOfBirth"]</label>
+                                    <input id="placeOfBirth" name="placeOfBirth" class="form-control" type="text" placeholder="@Localizer["placeOfBirth"]" autocomplete="off">
+                                </div>
+                                <div class="col-md-6 mb-5 fv-row">
+                                    <label class="required input_label mb-2">@Localizer["dob"]</label>
+                                    <input id="dob" name="dob" class="form-control" type="text" placeholder="@Localizer["dob"]" autocomplete="off">
+                                </div>
+                                <div class="col-md-6 mb-5 fv-row">
+                                    <label class="required input_label mb-2">@Localizer["locationRegNumber"]</label>
+                                    <input id="locationRegNumber" name="locationRegNumber" class="form-control" type="text" placeholder="@Localizer["locationRegNumber"]" autocomplete="off">
                                 </div>
                             </div>
 

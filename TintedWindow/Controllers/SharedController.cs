@@ -146,37 +146,13 @@ namespace TintedWindow.Controllers
 
                 if (controllerName != "Home" && controllerName != "Localization" && controllerName != "Account" && controllerName != "Validation")
                 {
-
-                    var data_filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "JSON", "data.json");
-                    dynamic dataArr = GetStaticCall(data_filePath);
-                    //dynamic dataArr = JsonConvert.DeserializeObject(jsonData);
-
-                    ViewData["DaysOfWeek"] = dataArr.daysOfWeek.ToObject<Dictionary<int, string>>();
-                    ViewData["LabelTypes"] = dataArr.labelTypes.ToObject<Dictionary<int, string>>();
-                    ViewData["Months"] = dataArr.months.ToObject<Dictionary<int, string>>();
-
-                    int currentYear = DateTime.Now.Year;
-                    var startYear = _configuration.GetValue<int>("MyConfiguration:startYear");
-                    List<int> years = new List<int>();
-
-                    for (int year = startYear; year <= currentYear; year++)
-                    {
-                        years.Add(year);
-                    }
-                    ViewData["Years"] = years;
-
                     var roleId = viewRoleId;
 
                     var roleIds = new Dictionary<string, int>
                     {
                         { "Index", viewRoleId },
-                        { "ServiceScheduleDetailsById", viewRoleId },
-                        { "GetByCategory", viewRoleId },
-                        { "GetService", viewRoleId },
                         { "List", viewRoleId },
                         { "Edit", editRoleId },
-                        { "EditDetails", editRoleId },
-                        { "UpdateOrder", editRoleId },
                         { "Update", editRoleId },
                         { "Create", addRoleId },
                         { "Add", addRoleId },
@@ -190,25 +166,6 @@ namespace TintedWindow.Controllers
                     if (roleIds.TryGetValue(actionName, out roleId))
                     {
                         roleId = roleId;
-                    }
-
-                    switch (controllerName)
-                    {
-                        case "Appointment":
-                            controllerName = "ManageAppointments";
-                            break;
-                        case "AppointmentDaily":
-                            controllerName = "DailyAppointments";
-                            break;
-                        case "AppointmentDailyByNumber":
-                            controllerName = "DailyAppointmentsByNumber";
-                            break;
-                        case "GlobalConfig":
-                            controllerName = "AdvancedSettings";
-                            break;
-
-                        default:
-                            break;
                     }
 
                     if (!HasRole(controllerName, roleId))
@@ -225,58 +182,6 @@ namespace TintedWindow.Controllers
 
                     var permissions = HelperExtensions.CheckSectionPermissions(actions);
                     ViewData["permissions"] = permissions;
-
-                    if (controllerName != "UserConfiguration" && controllerName != "WebUsers" && controllerName != "WebRoles")
-                    {
-                        var loadDataObj = new LoadDataReq();
-
-                        switch (controllerName)
-                        {
-                            case "ServiceLink":
-                            case "Appointment":
-                            case "ManageAppointments":
-                            case "AppointmentDaily":
-                            case "DailyAppointments":
-                                loadDataObj.isService = true;
-                                break;
-
-                            case "DailyAppointmentsByNumber":
-                            case "AppointmentDailyByNumber":
-                                loadDataObj.isCounter = true;
-                                loadDataObj.isService = true;
-                                break;
-
-                            case "Corporate":
-                                loadDataObj.isCorporateGroup = true;
-                                break;
-
-                            case "CorporateService":
-                                loadDataObj.isCorporate = true;
-                                loadDataObj.isService = true;
-                                loadDataObj.isCorporateGroup = true;
-                                break;
-
-                            case "ServiceSchedule":
-                                loadDataObj.isServiceUnassignedSchedule = true;
-                                loadDataObj.isService = true;
-                                break;
-
-                            case "Service":
-                                loadDataObj.isCategory = true;
-                                loadDataObj.isLocation = true;
-                                loadDataObj.isCounter = true;
-                                loadDataObj.isFixedServiceRequirement = true;
-                                break;
-
-                            default:
-                                break;
-                        }
-
-                        if (loadDataObj != null)
-                        {
-                            await LoadData(loadDataObj);
-                        }
-                    }
                 }
             }
 
@@ -1025,36 +930,27 @@ namespace TintedWindow.Controllers
 
         #region LoadData
         [HttpPost]
-        public async Task LoadData(LoadDataReq obj)
+        public async Task applicationLoadData()
         {
             dynamic? res = null;
-
-            var ApiPreff = _configuration.GetValue<string>("MyConfiguration:ApiPreff");
-            string url = ApiPreff + "LoadData";
-
-            res = await PostCall(url, obj, null, true, true);
-
-            if (res.statusCode.code == 0)
+            if (isStaticLogin)
             {
-                ViewData["corporates"] = res.corporates;
-                ViewData["services"] = res.services;
-                ViewData["categories"] = res.categories;
-                ViewData["counters"] = res.counters;
-                ViewData["locations"] = res.locations;
-                ViewData["corporateGroups"] = res.corporateGroups;
-                ViewData["servicesUnassignedSchedule"] = res.servicesUnassignedSchedule;
-                ViewData["fixedServiceRequirmenet"] = res.fixedServiceRequirmenet;
+                string url = staticUrl + "/JSON/Application/LoadData.json";
+                res = GetStaticCall(url);
             }
             else
             {
-                ViewData["corporates"] = new List<dynamic>();
-                ViewData["services"] = new List<dynamic>();
-                ViewData["categories"] = new List<dynamic>();
-                ViewData["counters"] = new List<dynamic>();
-                ViewData["locations"] = new List<dynamic>();
-                ViewData["corporateGroups"] = new List<dynamic>();
-                ViewData["servicesUnassignedSchedule"] = new List<dynamic>();
-                ViewData["fixedServiceRequirmenet"] = new List<dynamic>();
+                var ApiPreff = _configuration.GetValue<string>("MyConfiguration:ApiPreffUser");
+                string url = ApiPreff + "User/LoadData";
+                res = await PostCall(url, null, null, true, true);
+            }
+            if ((int)res.statusCode.code == 0)
+            {
+                ViewData["plateSymbolList"] = res.plateSymbol;
+            }
+            else
+            {
+                ViewData["plateSymbolList"] = null;
             }
         }
         #endregion
@@ -1126,18 +1022,5 @@ namespace TintedWindow.Controllers
         }
         #endregion
 
-        #region Service
-        public async Task<dynamic> GetService(ServiceReqDelete obj)
-        {
-            dynamic? res = null;
-
-            var ApiPreff = _configuration.GetValue<string>("MyConfiguration:ApiPreff");
-            string url = ApiPreff + "Service/GetById";
-
-            res = await PostCall(url, obj, null);
-
-            return res != null ? res.ToString() : res;
-        }
-        #endregion
     }
 }

@@ -18,7 +18,7 @@ var KTAddWebUser = function () {
                     fullName: {
                         validators: {
                             callback: {
-                                message: localizer["Full Name"] + " " + localizer["isRequired"],
+                                message: localizer["FullName"] + " " + localizer["isRequired"],
 
                                 callback: function (input) {
                                     return input.value.trim() !== '';
@@ -267,4 +267,11 @@ var KTAddWebUser = function () {
 KTUtil.onDOMContentLoaded(function () {
     KTAddWebUser.init();
     verificationToken = $('[name= "__RequestVerificationToken"]').val();
+
+    flatpickr('#dob', {
+        locale: 'ar',
+    });
+    flatpickr('#ownershipDate', {
+        locale: 'ar',
+    });
 });

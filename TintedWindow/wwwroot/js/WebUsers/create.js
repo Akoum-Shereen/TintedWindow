@@ -18,7 +18,7 @@ var KTAddWebUser = function () {
                     fullName: {
                         validators: {
                             callback: {
-                                message: localizer["Full Name"] + " " + localizer["isRequired"],
+                                message: localizer["FullName"] + " " + localizer["isRequired"],
 
                                 callback: function (input) {
                                     return input.value.trim() !== '';

@@ -1,0 +1,14 @@
+{
+  "plateSymbol": [
+    "B",
+    "M",
+    "N",
+    "O",
+    "S",
+    "Y"
+  ],
+  "statusCode": {
+    "code": 0,
+    "message": "Success"
+  }
+}

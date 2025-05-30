@@ -96,6 +96,7 @@ namespace TintedWindow.Controllers.UserManagement
 
                 return PageRedirect("LoginPage");
             }
+            await applicationLoadData();
 
             return View("Create");
         }

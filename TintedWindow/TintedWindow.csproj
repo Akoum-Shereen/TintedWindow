@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\JSON\Application\" />
     <Folder Include="wwwroot\js\Localization\" />
   </ItemGroup>
 
