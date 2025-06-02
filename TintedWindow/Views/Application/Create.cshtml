@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = Localizer["application"];
     var plateSymbolList = ViewData["plateSymbolList"] == null ? new List<dynamic>() : (dynamic)ViewData["plateSymbolList"];
+    var reference = ViewData["reference"] == null ? new List<dynamic>() : (dynamic)ViewData["reference"];
 
 }
 <a href="@(Url.Content("~/Application"))" class="back-btn" style="display:none;"></a>
@@ -46,7 +47,7 @@
                                             data-placeholder="@Localizer["plateSymbol"]">
                                         @foreach (var item in plateSymbolList)
                                         {
-                                            <option value="@Html.Raw(item)">@Html.Raw(item)</option>
+                                            <option value="@Html.Raw(item.id)">@Html.Raw(item.name)</option>
                                         }
                                     </select>
                                 </div>
@@ -79,52 +80,149 @@
                                     <label class="required input-label mb-2">@Localizer["carColor"]</label>
                                     <input id="carColor" name="carColor" class="form-control" type="text" placeholder="@Localizer["carColor"]">
                                 </div>
-                                
+
                                 <div class="col-md-6 mb-5 fv-row">
                                     <label class="required input-label mb-2">@Localizer["cardType"]</label>
                                     <input id="cardType" name="cardType" class="form-control" type="text" placeholder="@Localizer["cardType"]">
                                 </div>
-                                
+
                                 <div class="col-md-6 mb-5 fv-row">
                                     <label class="required input-label mb-2">@Localizer["ownershipDate"]</label>
                                     <input id="ownershipDate" name="ownershipDate" class="form-control" type="text" placeholder="@Localizer["ownershipDate"]">
                                 </div>
 
+                                <div class="col-md-6 mb-5 fv-row">
+                                    <label class="required input-label mb-2">@Localizer["documentType"]</label>
+                                    <select name="documentType" class="form-select" data-kt-repeater="select2" data-placeholder="@Localizer["documentType"]">
+                                        <option value="">@Localizer["documentType"]</option>
+                                        @foreach (var item in reference)
+                                        {
+                                            <option value="@Html.Raw(item.id)">@Html.Raw(item.name)</option>
+                                        }
+                                    </select>
+                                </div>
 
+                                <div class="col-md-6 mb-5 fv-row">
+                                    <div class="form-group">
+                                        <div class="form-group row mb-5">
+                                            <div class="col-sm-12 col-md-6 fv-row">
+                                                <label class="required form-label">@Localizer["position"]</label>
+                                                <select name="positionId" class="form-select" data-kt-repeater="select2" data-placeholder="@Localizer["position"]">
+                                                    <option value="">@Localizer["position"]</option>
+                                                    @foreach (var item in reference)
+                                                    {
+                                                        <option value="@Html.Raw(item.id)">@Html.Raw(item.name)</option>
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md-6 fv-row ">
+                                                <label class="required form-label">@Localizer["note"]</label>
+                                                <input type="text" class="form-control mb-2 mb-md-0" placeholder="@Localizer["note"]" id="positionTxt" name="positionTxt" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-5 fv-row">
+                                    <div id="kt_docs_repeater_advanced_reference">
+                                        <!--begin::Form group-->
+                                        <div class="form-group">
+                                            <div data-repeater-list="kt_docs_repeater_advanced_reference">
+
+                                                <div data-repeater-item>
+                                                    <div class="form-group row mb-5">
+                                                        <div class="col-sm-12 col-md-5 fv-row">
+                                                            <label class="required form-label">@Localizer["reference"]</label>
+                                                            <select name="referenceId" class="form-select" data-kt-repeater="select2" data-placeholder="@Localizer["reference"]">
+                                                                <option value="">@Localizer["reference"]</option>
+                                                                @foreach (var item in reference)
+                                                                {
+                                                                    <option value="@Html.Raw(item.id)">@Html.Raw(item.name)</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-sm-12 col-md-5 fv-row ">
+                                                            <label class="required form-label">@Localizer["note"]</label>
+                                                            <input type="text" class="form-control mb-2 mb-md-0" placeholder="@Localizer["note"]" id="referenceTxt" name="referenceTxt" />
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <a href="javascript:;" data-repeater-delete class="btn btn-flex btn-sm btn-light-danger mt-3 mt-md-9">
+                                                                <i class="ki-outline ki-trash fs-2"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--end::Form group-->
+                                        <!--begin::Form group-->
+                                        <div class="form-group">
+                                            <a href="javascript:;" data-repeater-create class="btn btn-flex btn-light-primary">
+                                                @Localizer["Add"]
+                                            </a>
+                                        </div>
+                                        <!--end::Form group-->
+                                    </div>
+                                </div>
                             </div>
+
                             <div class="separator mt-6 mb-11"></div>
                             <div class="row" id="personInfoContainer">
-                                <div class="col-md-6 mb-5 fv-row">
-                                    <label class="required input-label mb-2">@Localizer["tripleName"]</label>
-                                    <input id="tripleName" name="tripleName" class="form-control" type="text" placeholder="@Localizer["tripleName"]">
-                                </div>
-                                <div class="col-md-6 mb-5 fv-row">
-                                    <label class="required input_label mb-2">@Localizer["placeOfResidence"]</label>
-                                    <input id="placeOfResidence" name="placeOfResidence" class="form-control" type="text" placeholder="@Localizer["placeOfResidence"]" autocomplete="off">
-                                </div>
-                                <div class="col-md-6 mb-5 fv-row">
-                                    <label class="required input_label mb-2">@Localizer["Phone"]</label>
-                                    <input id="user_phone" name="user_phone" class="form-control NumbersOnly" type="text" placeholder="@Localizer["Phone"]">
-                                </div>
-                                <div class="col-md-6 mb-5 fv-row">
-                                    <label class="required input_label mb-2">@Localizer["motherName"]</label>
-                                    <input id="motherName" name="motherName" class="form-control" type="text" placeholder="@Localizer["motherName"]">
-                                </div>
-                                <div class="col-md-6 mb-5 fv-row">
-                                    <label class="required input_label mb-2">@Localizer["placeOfBirth"]</label>
-                                    <input id="placeOfBirth" name="placeOfBirth" class="form-control" type="text" placeholder="@Localizer["placeOfBirth"]" autocomplete="off">
-                                </div>
-                                <div class="col-md-6 mb-5 fv-row">
-                                    <label class="required input_label mb-2">@Localizer["dob"]</label>
-                                    <input id="dob" name="dob" class="form-control" type="text" placeholder="@Localizer["dob"]" autocomplete="off">
-                                </div>
-                                <div class="col-md-6 mb-5 fv-row">
-                                    <label class="required input_label mb-2">@Localizer["locationRegNumber"]</label>
-                                    <input id="locationRegNumber" name="locationRegNumber" class="form-control" type="text" placeholder="@Localizer["locationRegNumber"]" autocomplete="off">
+                                <div id="kt_docs_repeater_advanced_contactInfo">
+                                    <!--begin::Form group-->
+                                    <div class="form-group">
+                                        <div data-repeater-list="kt_docs_repeater_advanced_contactInfo">
+
+                                            <div class="row" data-repeater-item>
+                                                <div class="col-md-6 mb-5 fv-row">
+                                                    <label class="required input-label mb-2">@Localizer["tripleName"]</label>
+                                                    <input id="tripleName" name="tripleName" class="form-control" type="text" placeholder="@Localizer["tripleName"]">
+                                                </div>
+                                                <div class="col-md-6 mb-5 fv-row">
+                                                    <label class="required input_label mb-2">@Localizer["placeOfResidence"]</label>
+                                                    <input id="placeOfResidence" name="placeOfResidence" class="form-control" type="text" placeholder="@Localizer["placeOfResidence"]" autocomplete="off">
+                                                </div>
+                                                <div class="col-md-6 mb-5 fv-row">
+                                                    <label class="required input_label mb-2">@Localizer["Phone"]</label>
+                                                    <input id="user_phone" name="user_phone" class="form-control NumbersOnly" type="text" placeholder="@Localizer["Phone"]">
+                                                </div>
+                                                <div class="col-md-6 mb-5 fv-row">
+                                                    <label class="required input_label mb-2">@Localizer["motherName"]</label>
+                                                    <input id="motherName" name="motherName" class="form-control" type="text" placeholder="@Localizer["motherName"]">
+                                                </div>
+                                                <div class="col-md-6 mb-5 fv-row">
+                                                    <label class="required input_label mb-2">@Localizer["placeOfBirth"]</label>
+                                                    <input id="placeOfBirth" name="placeOfBirth" class="form-control" type="text" placeholder="@Localizer["placeOfBirth"]" autocomplete="off">
+                                                </div>
+                                                <div class="col-md-6 mb-5 fv-row">
+                                                    <label class="required input_label mb-2">@Localizer["dob"]</label>
+                                                    <input id="dob" name="dob" class="form-control" type="text" placeholder="@Localizer["dob"]" autocomplete="off">
+                                                </div>
+                                                <div class="col-md-6 mb-5 fv-row">
+                                                    <label class="required input_label mb-2">@Localizer["locationRegNumber"]</label>
+                                                    <input id="locationRegNumber" name="locationRegNumber" class="form-control" type="text" placeholder="@Localizer["locationRegNumber"]" autocomplete="off">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <a href="javascript:;" data-repeater-delete class="btn btn-flex btn-sm btn-light-danger mt-3 mt-md-9">
+                                                        <i class="ki-outline ki-trash fs-2"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--begin::Form group-->
+                                    <div class="form-group">
+                                        <a href="javascript:;" data-repeater-create class="btn btn-flex btn-light-primary">
+                                            @Localizer["Add"]
+                                        </a>
+                                    </div>
+                                    <!--end::Form group-->
                                 </div>
                             </div>
 
-                            <div class="separator mb-6"></div>
+                            <div class="separator mt-6 mb-11"></div>
                             <!--end::Separator-->
                             <!--begin::Action buttons-->
                             <div class="d-flex justify-content-end">
@@ -165,5 +263,7 @@
 @Html.AntiForgeryToken()
 
 @section Scripts {
+    <script src="~/assets/plugins/custom/formrepeater/formrepeater.bundle.js"></script>
+
     <script src="~/js/Application/create.js" type="text/javascript" asp-append-version="true"></script>
 }

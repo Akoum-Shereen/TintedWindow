@@ -87,6 +87,33 @@ var KTAddWebUser = function () {
         submitButton.addEventListener('click', e => {
             e.preventDefault();
 
+            removeFieldsBySubstring(validator, 'kt_docs_repeater_advanced_reference');
+
+            var repeaterCount = document.querySelectorAll('[data-repeater-item]').length;
+            for (let i = 0; i < repeaterCount; i++) {
+                validator.addField(`kt_docs_repeater_advanced_reference[${i}][referenceId]`, {
+                    validators: {
+                        notEmpty: {
+                            message: localizer["Workingdays"] + " " + localizer["isRequired"],
+                        },
+                    }
+                });
+                validator.addField(`kt_docs_repeater_advanced_reference[${i}][maxappointmentperday]`, {
+                    validators: {
+                        notEmpty: {
+                            message: localizer["Maxappointmentperday"] + " " + localizer["isRequired"],
+                        },
+                    }
+                });
+                validator.addField(`kt_docs_repeater_advanced_reference[${i}][maxcorporateappointmentperday]`, {
+                    validators: {
+                        notEmpty: {
+                            message: localizer["Maxcorporateappointmentperday"] + " " + localizer["isRequired"],
+                        },
+                    }
+                });
+            }
+
             // Validate form before submit
             if (validator) {
                 validator.validate().then(function (status) {
@@ -268,6 +295,107 @@ KTUtil.onDOMContentLoaded(function () {
     KTAddWebUser.init();
     verificationToken = $('[name= "__RequestVerificationToken"]').val();
 
+
+    $('#kt_docs_repeater_advanced_reference').repeater({
+        initEmpty: false,
+
+        show: function () {
+            $(this).slideDown();
+            console.log($(this))
+            // Re-init select2
+            $(this).find('[data-kt-repeater="select2"]').select2();
+            updateOptions();
+
+            $(this).find('[data-kt-repeater="select2"]').select2().on('change', function (e) {
+                updateOptions();
+            });
+
+        },
+
+        hide: function (deleteElement) {
+            if ($('#kt_docs_repeater_advanced_reference [data-repeater-item]').length > 1) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: localizer["AreUSure"],
+                    text: localizer["RevertThis"],
+                    showCancelButton: true,
+                    confirmButtonText: localizer["Delete"],
+                    cancelButtonText: localizer["Cancel"],
+                    reverseButtons: true,
+                    buttonsStyling: false,
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                        cancelButton: "btn btn-active-light"
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        $(this).slideUp(deleteElement);
+                        setTimeout(function () {
+                            updateOptions();
+                        }, 1000);
+
+                    }
+                });
+            }
+        },
+
+        ready: function () {
+            // Init select2
+            $('[data-kt-repeater="select2"]').select2();
+        }
+    });
+    $('#kt_docs_repeater_advanced_contactInfo').repeater({
+        initEmpty: false,
+
+        show: function () {
+            $(this).slideDown();
+            console.log($(this))
+            // Re-init select2
+            $(this).find('[data-kt-repeater="select2"]').select2();
+            updateOptions();
+
+            $(this).find('[data-kt-repeater="select2"]').select2().on('change', function (e) {
+                updateOptions();
+            });
+
+        },
+
+        hide: function (deleteElement) {
+            if ($('#kt_docs_repeater_advanced_contactInfo [data-repeater-item]').length > 1) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: localizer["AreUSure"],
+                    text: localizer["RevertThis"],
+                    showCancelButton: true,
+                    confirmButtonText: localizer["Delete"],
+                    cancelButtonText: localizer["Cancel"],
+                    reverseButtons: true,
+                    buttonsStyling: false,
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                        cancelButton: "btn btn-active-light"
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        $(this).slideUp(deleteElement);
+                        setTimeout(function () {
+                            updateOptions();
+                        }, 1000);
+
+                    }
+                });
+            }
+        },
+
+        ready: function () {
+            // Init select2
+            $('[data-kt-repeater="select2"]').select2();
+        }
+    });
+
+
     flatpickr('#dob', {
         locale: 'ar',
     });
@@ -275,3 +403,62 @@ KTUtil.onDOMContentLoaded(function () {
         locale: 'ar',
     });
 });
+
+
+function GetAppointmentsPerWorkingDay() {
+    var appointments = [];
+    var appointment = {};
+
+    $('#kt_docs_repeater_advanced_reference [data-repeater-list="kt_docs_repeater_advanced_reference"] [data-repeater-item] .form-group').each(function () {
+        var maxappointmentperday = $(this).find('#maxappointmentperday').val();
+        var maxcorporateappointmentperday = $(this).find('#maxcorporateappointmentperday').val();
+
+        var selectedOption = $(this).find("option:selected");
+        var day = selectedOption.val();
+
+        if (day != null && day != "") {
+            appointment = {
+                "day": parseInt(day),
+                "maxappointmentperday": maxappointmentperday,
+                "maxcorporateappointmentperday": maxcorporateappointmentperday,
+            }
+            appointments.push(appointment);
+        }
+    });
+
+    return appointments
+};
+
+function updateOptions() {
+    console.log("Sss");
+
+    var selectedValues = [];
+
+    // Collect all selected values from the select elements
+    $('#kt_docs_repeater_advanced_reference [data-repeater-list="kt_docs_repeater_advanced_reference"] [data-repeater-item] select').each(function () {
+        var selectedOption = $(this).find("option:selected");
+        var idservice = selectedOption.val();
+
+        if (idservice != null && idservice !== "") {
+            selectedValues.push(idservice);
+        }
+    });
+
+    // Disable options in all select elements
+    $('#kt_docs_repeater_advanced_reference [data-repeater-list="kt_docs_repeater_advanced_reference"] [data-repeater-item] select').each(function () {
+        var selectElement = $(this);
+
+        // First, enable all options before applying the disabling logic
+        selectElement.find('option').prop('disabled', false);
+
+        // Then, disable the already selected values
+        selectedValues.forEach(function (value) {
+            if (value !== selectElement.val()) { // Don't disable the currently selected option
+                selectElement.find('option[value="' + value + '"]').prop('disabled', true);
+            }
+        });
+
+        // Trigger select2 to refresh the state of the dropdown
+        selectElement.trigger('change.select2');
+    });
+}

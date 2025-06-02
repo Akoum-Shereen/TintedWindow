@@ -947,10 +947,12 @@ namespace TintedWindow.Controllers
             if ((int)res.statusCode.code == 0)
             {
                 ViewData["plateSymbolList"] = res.plateSymbol;
+                ViewData["reference"] = res.reference;
             }
             else
             {
                 ViewData["plateSymbolList"] = null;
+                ViewData["reference"] = null;
             }
         }
         #endregion

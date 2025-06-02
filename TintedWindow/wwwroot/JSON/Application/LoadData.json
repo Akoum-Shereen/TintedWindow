@@ -1,11 +1,47 @@
 {
   "plateSymbol": [
-    "B",
-    "M",
-    "N",
-    "O",
-    "S",
-    "Y"
+    {
+      "id": 1,
+      "name": "B"
+    },
+    {
+      "id": 2,
+      "name": "M"
+    },
+    {
+      "id": 3,
+      "name": "N"
+    },
+    {
+      "id": 4,
+      "name": "O"
+    },
+    {
+      "id": 5,
+      "name": "S"
+    },
+    {
+      "id": 6,
+      "name": "Y"
+    }
+  ],
+  "reference": [
+    {
+      "id": 1,
+      "name": "A"
+    },
+    {
+      "id": 2,
+      "name": "B"
+    },
+    {
+      "id": 3,
+      "name": "C"
+    },
+    {
+      "id": 4,
+      "name": "D"
+    }
   ],
   "statusCode": {
     "code": 0,
